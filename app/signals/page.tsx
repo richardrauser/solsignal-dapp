@@ -1,10 +1,10 @@
 import { title } from "@/components/primitives";
 import { Snippet } from "@nextui-org/snippet";
 
-export default function SignalsPage() {
+export default function AlertsPage() {
   return (
     <div>
-      <h1 className={title()}>Your signals</h1>
+      <h1 className={title()}>Your alerts</h1>
 
       <div className="mt-8">
         <Snippet hideCopyButton hideSymbol variant="bordered">
