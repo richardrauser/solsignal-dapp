@@ -11,12 +11,15 @@ export default function Home() {
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-xl text-center justify-center">
+        <h1 className={title()}>📈 😎</h1>
+        <br />
+        <br />
         <h1 className={title()}>Configure&nbsp;</h1>
         <h1 className={title({ color: "violet" })}>Solana alerts&nbsp;</h1>
         <br />
         <h1 className={title()}>to notify you when onchain events occur.</h1>
         <h2 className={subtitle({ class: "mt-4" })}>
-          Your first 5 signals are free!
+          Your first 5 alerts are free!
         </h2>
       </div>
 

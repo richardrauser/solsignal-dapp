@@ -1,8 +1,9 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + NextUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "SolSignal",
+  description:
+    "Configure Solana alerts to notify you when onchain events occur.",
   navItems: [
     // {
     //   label: "Home",
