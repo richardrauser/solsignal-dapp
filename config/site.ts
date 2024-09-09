@@ -23,10 +23,10 @@ export const siteConfig = {
     },
   ],
   navMenuItems: [
-    {
-      label: "Profile",
-      href: "/profile",
-    },
+    // {
+    //   label: "Profile",
+    //   href: "/profile",
+    // },
     // {
     //   label: "Dashboard",
     //   href: "/dashboard",
