@@ -3,7 +3,7 @@ import * as React from "react";
 import { IconSvgProps } from "@/types";
 
 export const Logo: React.FC<IconSvgProps> = ({
-  size = 36,
+  size = 30,
   width,
   height,
   ...props
@@ -11,15 +11,32 @@ export const Logo: React.FC<IconSvgProps> = ({
   <svg
     fill="none"
     height={size || height}
-    viewBox="0 0 32 32"
+    viewBox={"0 0 840 840"}
     width={size || width}
     {...props}
   >
-    <path
-      clipRule="evenodd"
-      d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-      fill="currentColor"
+    <circle
+      cx="376.8"
+      cy="316"
+      r="300"
+      path="currentColor"
+      strokeWidth="36"
+      stroke="currentColor"
+      // fill="currentColor"
       fillRule="evenodd"
+    />
+
+    <polyline
+      points=".02 389.32 126.86 389.15 376.8 108.32 591.3 388.53 753.58 388.32"
+      strokeWidth="36"
+      stroke="currentColor"
+    />
+    <circle
+      cx="376.8"
+      cy="395.65"
+      r="70.64"
+      strokeWidth="36"
+      stroke="currentColor"
     />
   </svg>
 );

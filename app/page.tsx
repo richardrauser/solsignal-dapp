@@ -15,7 +15,7 @@ export default function Home() {
         <br />
         <br />
         <h1 className={title()}>Configure&nbsp;</h1>
-        <h1 className={title({ color: "violet" })}>Solana alerts&nbsp;</h1>
+        <h1 className={title({ color: "green" })}>Solana alerts&nbsp;</h1>
         <br />
         <h1 className={title()}>to notify you when onchain events occur.</h1>
         <h2 className={subtitle({ class: "mt-4" })}>

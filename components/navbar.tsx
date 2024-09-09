@@ -106,16 +106,20 @@ export const Navbar = () => {
         </NavbarItem>
       </NavbarContent> */}
 
-      {/* <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
+      <NavbarContent className=" pl-4" justify="end">
+        {/* <Link isExternal aria-label="Github" href={siteConfig.links.github}>
           <GithubIcon className="text-default-500" />
-        </Link>
+        </Link> */}
         <ThemeSwitch />
-      </NavbarContent> */}
+      </NavbarContent>
+      <Button as={Link} color="primary" href="/login" variant="flat">
+        Login
+      </Button>
       <NavbarMenuToggle />
 
       <NavbarMenu>
         {/* {searchInput} */}
+        <ThemeSwitch />
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
