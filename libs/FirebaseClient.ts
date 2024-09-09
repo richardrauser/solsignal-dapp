@@ -7,7 +7,6 @@ import {
   GoogleAuthProvider,
   Auth,
 } from "firebase/auth";
-import { error } from "console";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -47,7 +46,7 @@ export class FirebaseClient {
         if (credential === null) {
           const errorMessage =
             "Error logging in with Google: credential is null";
-          console.log(error);
+          console.log(errorMessage);
           throw Error(errorMessage);
         }
         const token = credential.accessToken;
