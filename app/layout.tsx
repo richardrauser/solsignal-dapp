@@ -18,6 +18,25 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  twitter: {
+    card: "summary",
+    site: "@volstrate",
+    title: "anglez - abstract, angular, on-chain art",
+    description:
+      "anglez - abract, angular, on-chain, generative NFT art by volstrate.",
+    creator: "@volstrate",
+    // "og:image": `https://anglez.xyz/anglez-quadrants.png`,
+  },
+  openGraph: {
+    title: "anglez - abstract, angular, on-chain art",
+    url: "https://anglez.xyz/",
+    description:
+      "anglez - abract, angular, on-chain, generative NFT art by volstrate.  ",
+    // images: [{ url: `https://anglez.xyz/anglez-quadrants.png` }],
+  },
+  // other: {
+  //   ...frame Metadata,
+  // },
 };
 
 export const viewport: Viewport = {

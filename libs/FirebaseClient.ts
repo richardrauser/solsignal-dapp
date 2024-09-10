@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   Auth,
 } from "firebase/auth";
+import { User } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -25,6 +26,15 @@ const firebaseConfig = {
 
 // Initialize Firebase
 
+function getFirebase() {
+  return initializeApp(firebaseConfig);
+}
+
+export function getFirebaseAuth() {
+  const firebase = getFirebase();
+  return getAuth(firebase);
+}
+
 export class FirebaseClient {
   firebaseApp: FirebaseApp;
   analytics: Analytics;
@@ -37,9 +47,9 @@ export class FirebaseClient {
     this.auth = getAuth(this.firebaseApp);
   }
 
-  async loginWithGoogle() {
+  async loginWithGoogle(): Promise<User> {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(this.auth, provider)
+    return signInWithPopup(this.auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -54,8 +64,10 @@ export class FirebaseClient {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
+        return user;
       })
       .catch((error) => {
+        return Promise.reject(error);
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -64,6 +76,7 @@ export class FirebaseClient {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log("Error logging in with Google: ", error);
+        throw error;
       });
   }
 }

@@ -1,3 +1,4 @@
+"use client";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -14,7 +15,7 @@ import { Input } from "@nextui-org/input";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
-
+import { Spinner } from "@nextui-org/spinner";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
@@ -25,8 +26,13 @@ import {
   SearchIcon,
   Logo,
 } from "@/components/icons";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { useState } from "react";
+import { getFirebaseAuth } from "@/libs/FirebaseClient";
 
 export const Navbar = () => {
+  const [loadingUser, setLoadingUser] = useState(true);
+  const [user, setUser] = useState<User | null | undefined>(null);
   // const searchInput = (
   //   <Input
   //     aria-label="Search"
@@ -47,6 +53,20 @@ export const Navbar = () => {
   //     type="search"
   //   />
   // );
+  let firebase = require("firebase/app");
+
+  const auth = getFirebaseAuth();
+
+  onAuthStateChanged(auth, (user: User | null) => {
+    console.log("[onAuthStateChanged] User: ", user);
+    setUser(user);
+    setLoadingUser(false);
+  });
+
+  const logoutTapped = async () => {
+    setLoadingUser(true);
+    await auth.signOut();
+  };
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -112,9 +132,18 @@ export const Navbar = () => {
         </Link> */}
         <ThemeSwitch />
       </NavbarContent>
-      <Button as={Link} color="primary" href="/login" variant="flat">
-        Login
-      </Button>
+
+      {loadingUser ? (
+        <Spinner />
+      ) : user ? (
+        <Button as={Link} color="primary" onClick={logoutTapped} variant="flat">
+          Logout
+        </Button>
+      ) : (
+        <Button as={Link} color="primary" href="/login" variant="flat">
+          Login
+        </Button>
+      )}
       <NavbarMenuToggle />
 
       <NavbarMenu>
