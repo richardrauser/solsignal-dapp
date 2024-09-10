@@ -51,11 +51,11 @@ export default function RootLayout({
               <Link
                 isExternal
                 className="flex items-center gap-1 text-current"
-                href="https://x.com/richardrauser"
-                title="richard rauser on x.com"
+                href="https://www.raaza.net"
+                title="raaza - web3 tech consultancy"
               >
                 <span className="text-default-600">created by</span>
-                <p className="text-primary">richard rauser</p>
+                <p className="text-primary">raaza</p>
               </Link>
             </footer>
           </div>
