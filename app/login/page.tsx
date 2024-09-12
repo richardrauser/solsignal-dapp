@@ -6,6 +6,7 @@ import { Spinner } from '@nextui-org/spinner'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import { loginWithGoogle } from '@/libs/auth'
 import { getFirebaseAuth } from '@/libs/firebase'
+import { createUser, updateUserLogin as updateUserLoginDetails, userExists } from '@/libs/storage'
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(true)
@@ -26,8 +27,13 @@ export default function LoginPage() {
     console.log('loginWithGooglePressed')
     setLoading(true)
     setLoggingIn(true)
-    const fetchedUser = await loginWithGoogle()
-    // setUser(fetchedUser)
+    const user = await loginWithGoogle()
+    const existingUser = await userExists(user.uid)
+    if (!existingUser) {
+      await createUser(user)
+    } else {
+      updateUserLoginDetails(user.uid)
+    }
     setLoggingIn(false)
   }
 

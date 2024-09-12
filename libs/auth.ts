@@ -19,6 +19,11 @@ export async function loginWithGoogle(): Promise<User> {
       const user = result.user
       // IdP data available using getAdditionalUserInfo(result)
       // ...
+
+  
+
+
+
       return user
     })
     .catch((error) => {

@@ -5,6 +5,8 @@ import { Input } from '@nextui-org/input'
 import { use, useEffect, useState } from 'react'
 import { PiWallet } from 'react-icons/pi'
 import { getCurrentUser } from '@/libs/auth'
+import { error } from 'console'
+import { createWalletAlert } from '@/libs/storage'
 
 export default function CreatePage() {
   const [email, setEmail] = useState('')
@@ -19,7 +21,17 @@ export default function CreatePage() {
 
   const createAlertPressed = async () => {
     console.log('createAlertPressed')
+
+    if (!currentUser) {
+      const errorMessage = 'No user logged in'
+      console.error(errorMessage)
+
+      throw Error(errorMessage)
+    }
+
+    await createWalletAlert(currentUser.uid, walletAddress, email)
   }
+
   return (
     <div>
       <h2 className={subtitle()}>💸 Transaction Alert</h2>
@@ -31,6 +43,8 @@ export default function CreatePage() {
         className="mt-4"
         type="string"
         label="Solana wallet address"
+        value={walletAddress}
+        onChange={(e) => setWalletAddress(e.target.value)}
         placeholder="0x..."
         startContent={
           <PiWallet className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
