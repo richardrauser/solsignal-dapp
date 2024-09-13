@@ -2,6 +2,7 @@ import { User } from 'firebase/auth'
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -106,4 +107,14 @@ export async function loadAlerts(uid: string) {
   console.log('Loaded alerts: ', alerts)
 
   return alerts
+}
+
+export async function deleteAlert(alertId: string) {
+  console.log('deleteAlert: ', alertId)
+  const firestore = await getStorage()
+  const alertsCollection = collection(firestore, 'alerts')
+
+  await deleteDoc(doc(alertsCollection, alertId))
+
+  console.log('Deleted alert: ', alertId)
 }
