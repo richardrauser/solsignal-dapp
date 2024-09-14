@@ -17,6 +17,8 @@ import { onAuthStateChanged, User } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 import { Spinner } from '@nextui-org/spinner'
 import toast from 'react-hot-toast'
+import { Link } from '@nextui-org/link'
+
 export default function AlertsPage() {
   const [user, setUser] = useState<User | null>(null)
   const [alerts, setAlerts] = useState<any[]>([])
@@ -157,31 +159,42 @@ export default function AlertsPage() {
                 {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
               </TableHeader>
 
-              <TableBody items={alerts}>
-                {(item) => (
-                  <TableRow key={item.id}>
-                    {(columnKey) => (
-                      <TableCell align="center">
-                        {columnKey != 'action' ? (
-                          getKeyValue(item, columnKey)
-                        ) : (
-                          <>
-                            {item.deleting ? (
-                              <center>
-                                <Spinner />
-                              </center>
-                            ) : (
-                              <Button onPress={() => deletePressed(item.id)}>
-                                Delete <br />
-                              </Button>
-                            )}
-                          </>
-                        )}
-                      </TableCell>
-                    )}
-                  </TableRow>
-                )}
-              </TableBody>
+              {alerts.length == 0 ? (
+                <TableBody emptyContent={'No alerts yet.'}>{[]}</TableBody>
+              ) : (
+                <TableBody items={alerts}>
+                  {(item) => (
+                    <TableRow key={item.id}>
+                      {(columnKey) => (
+                        <TableCell align="center">
+                          {columnKey != 'action' ? (
+                            getKeyValue(item, columnKey)
+                          ) : (
+                            <>
+                              {item.deleting ? (
+                                <center>
+                                  <Spinner />
+                                </center>
+                              ) : (
+                                <>
+                                  <Link className="mb-4" href={'/alerts/' + item.id}>
+                                    <Button>
+                                      Detail <br />
+                                    </Button>
+                                  </Link>
+                                  <Button onPress={() => deletePressed(item.id)}>
+                                    Delete <br />
+                                  </Button>
+                                </>
+                              )}
+                            </>
+                          )}
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  )}
+                </TableBody>
+              )}
             </Table>
           </>
         )}
