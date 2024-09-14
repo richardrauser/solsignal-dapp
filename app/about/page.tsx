@@ -1,5 +1,5 @@
-import { title } from "@/components/primitives";
-import { Snippet } from "@nextui-org/snippet";
+import { title } from '@/components/primitives'
+import { Snippet } from '@nextui-org/snippet'
 
 export default function AboutPage() {
   return (
@@ -14,9 +14,8 @@ export default function AboutPage() {
         </Snippet>
       </div>
       <div className="mt-8">
-        Alert channels: - SMS - WhatsApp Alert types: - Transaction - Balance -
-        Price
+        Alert channels: - SMS - WhatsApp Alert types: - Transaction - Balance - Price
       </div>
     </div>
-  );
+  )
 }
