@@ -18,14 +18,12 @@ export default function Home() {
         <h1 className={title({ color: "green" })}>Solana alerts&nbsp;</h1>
         <br />
         <h1 className={title()}>to notify you when onchain events occur.</h1>
-        <p className={"mt-4 mb-4 italic"}>
+        <p className={"mt-8 mb-4 italic"}>
           {`"`}Notify me when wallet 0x123...456 makes a SOL transaction{`"`}
-          <br />
+        </p>{" "}
+        <p className={"mt-4 mb-8 italic"}>
           {`"`}Notify me when wallet 0x123...456{"'"}s balance falls below 10
-          SOL
-          {`"`}
-          <br />
-          {`"`}Notify me when wallet 0x123...456 receives SOL{`"`}
+          SOL{`"`}
         </p>{" "}
         <h2 className={subtitle({ class: "mt-4" })}>
           Your first 5 alerts are free!

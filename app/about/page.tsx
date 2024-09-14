@@ -13,6 +13,10 @@ export default function AboutPage() {
           </span>
         </Snippet>
       </div>
+      <div className="mt-8">
+        Alert channels: - SMS - WhatsApp Alert types: - Transaction - Balance -
+        Price
+      </div>
     </div>
   );
 }

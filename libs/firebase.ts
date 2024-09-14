@@ -1,23 +1,21 @@
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBCT-kQlmeqmDQAa3bwtsbeJ_anrzYafnU',
-  authDomain: 'solsignal-app.firebaseapp.com',
-  projectId: 'solsignal-app',
-  storageBucket: 'solsignal-app.appspot.com',
-  messagingSenderId: '791998878696',
-  appId: '1:791998878696:web:d8458c92ff9849c7ab0a5d',
-  measurementId: 'G-RT56TN93YY',
-}
+  apiKey: "AIzaSyBCT-kQlmeqmDQAa3bwtsbeJ_anrzYafnU",
+  authDomain: "solsignal-app.firebaseapp.com",
+  projectId: "solsignal-app",
+  storageBucket: "solsignal-app.appspot.com",
+  messagingSenderId: "791998878696",
+  appId: "1:791998878696:web:d8458c92ff9849c7ab0a5d",
+  measurementId: "G-RT56TN93YY",
+};
 
 export function getFirebase() {
-  return initializeApp(firebaseConfig)
+  return initializeApp(firebaseConfig);
 }
 
 export function getFirebaseAuth() {
-  const firebase = getFirebase()
-  return getAuth(firebase)
+  const firebase = getFirebase();
+  return getAuth(firebase);
 }
-
-
