@@ -149,7 +149,9 @@ export default function AlertsPage() {
           <Spinner />
         ) : (
           <>
-            <p className={'mt-8 mb-4'}>You'll receive an alert email when these events occur.</p>{' '}
+            <p className={'mt-8 mb-4'}>
+              You{`'`}ll receive an alert email when these events occur.
+            </p>{' '}
             <Table aria-label="Example table with dynamic content">
               <TableHeader columns={columns}>
                 {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
