@@ -19,33 +19,7 @@ import { PiWallet } from 'react-icons/pi'
 import { shortenString } from '@/libs/stringUtils'
 import { link as linkStyles } from '@nextui-org/theme'
 import NextLink from 'next/link'
-
-const rows = [
-  {
-    key: '1',
-    name: 'Tony Reichert',
-    role: 'CEO',
-    status: 'Active',
-  },
-  {
-    key: '2',
-    name: 'Zoey Lang',
-    role: 'Technical Lead',
-    status: 'Paused',
-  },
-  {
-    key: '3',
-    name: 'Jane Fisher',
-    role: 'Senior Developer',
-    status: 'Active',
-  },
-  {
-    key: '4',
-    name: 'William Howard',
-    role: 'Community Manager',
-    status: 'Vacation',
-  },
-]
+import { loadAlert } from '@/libs/storage'
 
 const columns = [
   {
@@ -62,9 +36,10 @@ const columns = [
   // },
 ]
 
-export default function AlertPage({ params: { alertId } }) {
+export default function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
   console.log('AlertPage - Alert ID: ', alertId)
 
+  const [walletAddress, setWalletAddress] = useState<string | null>(null)
   const [balance, setBalance] = useState<string | null>(null)
   const [transactions, setTransactions] = useState<any[]>([])
 
@@ -72,10 +47,17 @@ export default function AlertPage({ params: { alertId } }) {
   const solanaConnection = new Connection(
     'https://white-blue-thunder.solana-mainnet.quiknode.pro/013268b6574ed4ec03683c918cadca2ba92226e1'
   )
-  const walletKey = new PublicKey('GQSGWetfWEUCwaRFonvgLj16ZEjoBNnQwFEjNmSygRB2')
 
   useEffect(() => {
     const fetchData = async () => {
+      const transactionAlert = await loadAlert(alertId)
+      if (!transactionAlert) {
+        return
+      }
+      const address = transactionAlert.walletAddress
+      setWalletAddress(address)
+      const walletKey = new PublicKey(address)
+
       const walletInfo = await solanaConnection.getAccountInfo(walletKey)
 
       const walletLamports = walletInfo?.lamports
@@ -128,9 +110,9 @@ export default function AlertPage({ params: { alertId } }) {
               'data-[active=true]:text-primary data-[active=true]:font-medium'
             )}
             color="foreground"
-            href={'https://solscan.io/account/' + walletKey.toString()}
+            href={'https://solscan.io/account/' + walletAddress}
           >
-            {shortenString(walletKey.toString())}
+            {walletAddress && shortenString(walletAddress)}
           </NextLink>
         </div>
         <div>Balance: {balance}</div>

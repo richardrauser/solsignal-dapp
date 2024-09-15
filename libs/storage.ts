@@ -4,6 +4,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  documentId,
   getCountFromServer,
   getDoc,
   getDocs,
@@ -163,6 +164,17 @@ export async function loadAlerts(uid: string) {
   console.log('Loaded alerts: ', alerts)
 
   return alerts
+}
+
+export async function loadAlert(id: string) {
+  console.log('loadAlert')
+  const firestore = await getStorage()
+  const alertsCollection = collection(firestore, 'alerts')
+
+  const alertDoc = await getDoc(doc(alertsCollection, id))
+  console.log('Loaded alert: ', alertDoc.data())
+
+  return alertDoc.data()
 }
 
 export async function deleteAlert(alertId: string) {

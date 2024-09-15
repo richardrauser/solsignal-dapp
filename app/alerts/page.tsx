@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react'
 import { Spinner } from '@nextui-org/spinner'
 import toast from 'react-hot-toast'
 import { Link } from '@nextui-org/link'
+import { shortenString } from '@/libs/stringUtils'
 
 export default function AlertsPage() {
   const [user, setUser] = useState<User | null>(null)
@@ -70,21 +71,6 @@ export default function AlertsPage() {
 
   //   getData()
   // }, [alerts])
-
-  const rows = [
-    {
-      key: '1',
-      email: 'Tony.Reichert@gmail.com',
-      walletAddress: '0z§1',
-      type: 'wallet',
-    },
-    {
-      key: '2',
-      email: 'Zoey.Lang@gmail.com',
-      walletAddress: '0xz9887',
-      type: 'wallet',
-    },
-  ]
 
   const columns = [
     // { id: "id", label: "ID" },
@@ -165,12 +151,14 @@ export default function AlertsPage() {
                 <TableBody items={alerts}>
                   {(item) => (
                     <TableRow key={item.id}>
-                      {(columnKey) => (
-                        <TableCell align="center">
-                          {columnKey != 'action' ? (
-                            getKeyValue(item, columnKey)
-                          ) : (
-                            <>
+                      {(columnKey) => {
+                        const value = getKeyValue(item, columnKey)
+
+                        if (columnKey == 'walletAddress') {
+                          return <TableCell align="center">{shortenString(value)}</TableCell>
+                        } else if (columnKey == 'action') {
+                          return (
+                            <TableCell align="center">
                               {item.deleting ? (
                                 <center>
                                   <Spinner />
@@ -187,10 +175,14 @@ export default function AlertsPage() {
                                   </Button>
                                 </>
                               )}
-                            </>
-                          )}
-                        </TableCell>
-                      )}
+                            </TableCell>
+                          )
+                        } else {
+                          return (
+                            <TableCell align="center">{getKeyValue(item, columnKey)}</TableCell>
+                          )
+                        }
+                      }}
                     </TableRow>
                   )}
                 </TableBody>
