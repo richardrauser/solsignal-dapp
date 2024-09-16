@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 href="https://www.raaza.net"
                 title="raaza - web3 tech consultancy"
               >
-                <span className="text-default-600">created by</span>
+                <span className="text-default-600">built by</span>
                 <p className="text-primary">raaza</p>
               </Link>
             </footer>

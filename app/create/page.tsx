@@ -13,6 +13,8 @@ import {
   createWalletAlert as createTransactionAlert,
 } from '@/libs/storage'
 import toast from 'react-hot-toast'
+import { PublicKey } from '@solana/web3.js'
+import { validateSolanaAddress } from '@/libs/stringUtils'
 
 export default function CreatePage() {
   const [email, setEmail] = useState('')
@@ -36,15 +38,19 @@ export default function CreatePage() {
       throw Error(errorMessage)
     }
 
+    const isAddressValid = validateSolanaAddress(transactionAlertWalletAddress)
+    if (!isAddressValid) {
+      toast.error('Invalid Solana wallet address.')
+      return
+    }
+
     const alertExists = await checkTransactionAlertExists(
       currentUser.uid,
       transactionAlertWalletAddress,
       email
     )
-
     if (alertExists) {
       toast.error(`An alert with those parameters already exists. You can see it in "Your alerts"`)
-      ;('Alert already exists!')
       return
     }
 
@@ -62,15 +68,19 @@ export default function CreatePage() {
       throw Error(errorMessage)
     }
 
+    const isAddressValid = validateSolanaAddress(balanceAlertWalletAddress)
+    if (!isAddressValid) {
+      toast.error('Invalid Solana wallet address.')
+      return
+    }
+
     const alertExists = await checkBalanceAlertExists(
       currentUser.uid,
       balanceAlertWalletAddress,
       email
     )
-
     if (alertExists) {
       toast.error(`An alert with those parameters already exists. You can see it in "Your alerts"`)
-      ;('Alert already exists!')
       return
     }
 

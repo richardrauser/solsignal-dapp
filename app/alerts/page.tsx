@@ -1,6 +1,5 @@
 'use client'
 import { title } from '@/components/primitives'
-import { getCurrentUser } from '@/libs/auth'
 import { getFirebaseAuth } from '@/libs/firebase'
 import { deleteAlert, loadAlerts } from '@/libs/storage'
 import { Button } from '@nextui-org/button'
@@ -19,6 +18,7 @@ import { Spinner } from '@nextui-org/spinner'
 import toast from 'react-hot-toast'
 import { Link } from '@nextui-org/link'
 import { shortenString } from '@/libs/stringUtils'
+import { PiInfoFill, PiInfoThin, PiTrashSimpleThin } from 'react-icons/pi'
 
 export default function AlertsPage() {
   const [user, setUser] = useState<User | null>(null)
@@ -84,7 +84,7 @@ export default function AlertsPage() {
     // },
     {
       key: 'walletAddress',
-      label: 'WALLET ADDRESS',
+      label: 'ADDRESS',
     },
     {
       key: 'createdAtString',
@@ -164,16 +164,21 @@ export default function AlertsPage() {
                                   <Spinner />
                                 </center>
                               ) : (
-                                <>
-                                  <Link className="mb-4" href={'/alerts/' + item.id}>
-                                    <Button>
-                                      Detail <br />
+                                <div className="flex items-center">
+                                  <Link href={'/alerts/' + item.id}>
+                                    <Button isIconOnly className="m-1 py-2" size="sm">
+                                      <PiInfoThin size="sm" />
                                     </Button>
                                   </Link>
-                                  <Button onPress={() => deletePressed(item.id)}>
-                                    Delete <br />
+                                  <Button
+                                    isIconOnly
+                                    className="m-1 py-2"
+                                    onPress={() => deletePressed(item.id)}
+                                    size="sm"
+                                  >
+                                    <PiTrashSimpleThin size="sm" />
                                   </Button>
-                                </>
+                                </div>
                               )}
                             </TableCell>
                           )
