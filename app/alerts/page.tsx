@@ -18,7 +18,8 @@ import { Spinner } from '@nextui-org/spinner'
 import toast from 'react-hot-toast'
 import { Link } from '@nextui-org/link'
 import { shortenString } from '@/libs/stringUtils'
-import { PiInfoFill, PiInfoThin, PiTrashSimpleThin } from 'react-icons/pi'
+import { PiInfoThin, PiTrashSimpleThin } from 'react-icons/pi'
+import { siteConfig } from '@/config/site'
 
 export default function AlertsPage() {
   const [user, setUser] = useState<User | null>(null)
@@ -153,7 +154,7 @@ export default function AlertsPage() {
                   emptyContent={
                     <>
                       <p>No alerts yet.</p>
-                      <Link className="mt-4" href="/create">
+                      <Link className="mt-4" href={siteConfig.navItems[0].href}>
                         <Button>create an alert</Button>
                       </Link>
                     </>

@@ -16,42 +16,19 @@ import clsx from 'clsx'
 import { Spinner } from '@nextui-org/spinner'
 import { siteConfig } from '@/config/site'
 import { ThemeSwitch } from '@/components/theme-switch'
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-  Logo,
-} from '@/components/icons'
+import { Logo } from '@/components/icons'
 import { onAuthStateChanged, User } from 'firebase/auth'
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import { getFirebaseAuth } from '@/libs/firebase'
+import { usePathname } from 'next/navigation'
 
 export const Navbar = () => {
+  // const [isMenuOpen, setIsMenuOpen] = useReducer((current) => !current, false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [loadingUser, setLoadingUser] = useState(true)
   const [user, setUser] = useState<User | null | undefined>(null)
-  // const searchInput = (
-  //   <Input
-  //     aria-label="Search"
-  //     classNames={{
-  //       inputWrapper: "bg-default-100",
-  //       input: "text-sm",
-  //     }}
-  //     endContent={
-  //       <Kbd className="hidden lg:inline-block" keys={["command"]}>
-  //         K
-  //       </Kbd>
-  //     }
-  //     labelPlacement="outside"
-  //     placeholder="Search..."
-  //     startContent={
-  //       <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-  //     }
-  //     type="search"
-  //   />
-  // );
-  let firebase = require('firebase/app')
+  const pathName = usePathname()
+  console.log('pathName: ', pathName)
 
   const auth = getFirebaseAuth()
 
@@ -67,8 +44,13 @@ export const Navbar = () => {
   }
 
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+    <NextUINavbar
+      maxWidth="xl"
+      position="sticky"
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+    >
+      <NavbarContent className="basis-1/5 md:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
@@ -124,25 +106,27 @@ export const Navbar = () => {
         </NavbarItem>
       </NavbarContent> */}
 
-      <NavbarContent className=" pl-4" justify="end">
-        {/* <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link> */}
+      <NavbarContent className="pl-4" justify="end">
         <ThemeSwitch />
       </NavbarContent>
 
-      {loadingUser ? (
-        <Spinner />
-      ) : user ? (
-        <Button as={Link} color="primary" onPress={logoutPressed} variant="flat">
-          Logout
-        </Button>
-      ) : (
-        <Button as={Link} color="primary" href="/login" variant="flat">
-          Login
-        </Button>
-      )}
-      <NavbarMenuToggle />
+      <NavbarContent className="hidden md:flex" justify="end">
+        {loadingUser ? (
+          <Spinner />
+        ) : user ? (
+          <Button as={Link} color="primary" onPress={logoutPressed} variant="flat">
+            Logout
+          </Button>
+        ) : (
+          <Button as={Link} color="primary" href="/login" variant="flat">
+            Login
+          </Button>
+        )}
+      </NavbarContent>
+
+      <NavbarContent className="md:hidden" justify="end">
+        <NavbarMenuToggle />
+      </NavbarContent>
 
       <NavbarMenu>
         {/* {searchInput} */}
@@ -150,15 +134,10 @@ export const Navbar = () => {
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
-                color={
-                  index === 2
-                    ? 'primary'
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? 'danger'
-                      : 'foreground'
-                }
-                href="#"
+                color={pathName == item.href ? 'primary' : 'foreground'}
+                href={item.href}
                 size="lg"
+                onClick={() => setIsMenuOpen(false)}
               >
                 {item.label}
               </Link>

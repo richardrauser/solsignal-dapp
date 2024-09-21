@@ -2,10 +2,9 @@
 import { subtitle, title } from '@/components/primitives'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PiWallet } from 'react-icons/pi'
 import { getCurrentUser } from '@/libs/auth'
-import { error } from 'console'
 import {
   checkBalanceAlertExists,
   checkWallertAlertExists as checkTransactionAlertExists,
@@ -16,7 +15,7 @@ import toast from 'react-hot-toast'
 import { PublicKey } from '@solana/web3.js'
 import { validateSolanaAddress } from '@/libs/stringUtils'
 
-export default function CreatePage() {
+export default function NewAlertPage() {
   const [email, setEmail] = useState('')
   const [transactionAlertWalletAddress, setTransactionAlertWalletAddress] = useState('')
   const [balanceAlertWalletAddress, setBalanceAlertWalletAddress] = useState('')
