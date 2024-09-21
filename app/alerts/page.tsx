@@ -120,6 +120,9 @@ export default function AlertsPage() {
 
       setTimeout(async function () {
         await deleteAlert(alertId)
+
+        // TODO: remove webhook from helius
+
         loadAlertData()
         toast.success('Alert deleted')
       }, delayInMilliseconds)
@@ -146,7 +149,18 @@ export default function AlertsPage() {
               </TableHeader>
 
               {alerts.length == 0 ? (
-                <TableBody emptyContent={'No alerts yet.'}>{[]}</TableBody>
+                <TableBody
+                  emptyContent={
+                    <>
+                      <p>No alerts yet.</p>
+                      <Link className="mt-4" href="/create">
+                        <Button>create an alert</Button>
+                      </Link>
+                    </>
+                  }
+                >
+                  {[]}
+                </TableBody>
               ) : (
                 <TableBody items={alerts}>
                   {(item) => (

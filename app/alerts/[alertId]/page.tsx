@@ -11,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from '@nextui-org/table'
-import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { Link } from '@nextui-org/link'
 import { useEffect, useState } from 'react'
 import {
@@ -28,6 +27,7 @@ import { deleteAlert, loadAlert } from '@/libs/storage'
 import { Spinner } from '@nextui-org/spinner'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { fetchWalletBalance, fetchWalletTransactions } from '@/libs/blockchain'
 
 const columns = [
   {
@@ -61,41 +61,18 @@ export default function AlertPage({ params: { alertId } }: { params: { alertId: 
       }
       const address = transactionAlert.walletAddress
       setWalletAddress(address)
-      const walletKey = new PublicKey(address)
 
-      // prod quicknode
-      const solanaConnection = new Connection(
-        'https://white-blue-thunder.solana-mainnet.quiknode.pro/013268b6574ed4ec03683c918cadca2ba92226e1'
-      )
-
-      const walletInfo = await solanaConnection.getAccountInfo(walletKey)
-
-      const walletLamports = walletInfo?.lamports
-      if (walletLamports) {
-        setBalance(`${walletLamports / LAMPORTS_PER_SOL} SOL`)
+      const walletBalance = await fetchWalletBalance(address)
+      if (walletBalance) {
+        setBalance(`${walletBalance} SOL`)
       } else {
         setBalance(`?`)
       }
 
       setWalletDetailsLoading(false)
 
-      const sigList = await solanaConnection.getSignaturesForAddress(walletKey, { limit: 5 })
-      console.log('sigList: ', sigList)
+      const sigList = await fetchWalletTransactions(address)
 
-      const sigs = sigList.map((sig) => sig.signature)
-
-      // var transactions = []
-
-      // for (const sig of sigs) {
-      //   console.log('sig: ', sig)
-      //   const tx = await solanaConnection.getParsedTransaction(sig, {
-      //     maxSupportedTransactionVersion: 0,
-      //   })
-      //   console.log('tx: ', tx)
-      //   transactions.push(tx)
-      // }
-
-      // console.log('transactions: ', transactions)
       setTransactions(sigList)
       setTransactionsLoading(false)
     }
@@ -113,6 +90,9 @@ export default function AlertPage({ params: { alertId } }: { params: { alertId: 
     console.log('Delete pressed for id: ', alertId)
 
     await deleteAlert(alertId)
+
+    // TODO: remove webhook from helius
+
     toast.success('Alert deleted')
     router.push('/alerts')
   }

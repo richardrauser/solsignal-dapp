@@ -184,5 +184,7 @@ export async function deleteAlert(alertId: string) {
 
   await deleteDoc(doc(alertsCollection, alertId))
 
+  // TODO: remove webhook from helius
+  
   console.log('Deleted alert: ', alertId)
 }
