@@ -1,7 +1,7 @@
-'use client'
-import { Button } from '@nextui-org/button'
-import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card'
-import { Divider } from '@nextui-org/divider'
+"use client";
+import { Button } from "@nextui-org/button";
+import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
+import { Divider } from "@nextui-org/divider";
 import {
   getKeyValue,
   Table,
@@ -10,92 +10,96 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from '@nextui-org/table'
-import { Link } from '@nextui-org/link'
-import { useEffect, useState } from 'react'
+} from "@nextui-org/table";
+import { Link } from "@nextui-org/link";
+import { useEffect, useState } from "react";
 import {
   PiArrowElbowDownRightThin,
   PiMoneyWavyThin,
   PiNotePencilThin,
   PiTrashSimpleThin,
   PiWallet,
-} from 'react-icons/pi'
-import { shortenString } from '@/libs/stringUtils'
-import { link as linkStyles } from '@nextui-org/theme'
-import NextLink from 'next/link'
-import { deleteAlert, loadAlert } from '@/libs/storage'
-import { Spinner } from '@nextui-org/spinner'
-import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
-import { fetchWalletBalance, fetchWalletTransactions } from '@/libs/blockchain'
+} from "react-icons/pi";
+import { shortenString } from "@/lib/stringUtils";
+import { link as linkStyles } from "@nextui-org/theme";
+import NextLink from "next/link";
+import { deleteAlert, loadAlert } from "@/lib/storage";
+import { Spinner } from "@nextui-org/spinner";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { fetchWalletBalance, fetchWalletTransactions } from "@/lib/blockchain";
 
 const columns = [
   {
-    key: 'signature',
-    label: 'TX SIGNATURE',
+    key: "signature",
+    label: "TX SIGNATURE",
   },
   {
-    key: 'blockTime',
-    label: 'BLOCKTIME',
+    key: "blockTime",
+    label: "BLOCKTIME",
   },
   // {
   //   key: 'status',
   //   label: 'STATUS',
   // },
-]
+];
 
-export default function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
-  console.log('AlertPage - Alert ID: ', alertId)
-  const router = useRouter()
-  const [walletAddress, setWalletAddress] = useState<string | null>(null)
-  const [balance, setBalance] = useState<string | null>(null)
-  const [walletDetailsLoading, setWalletDetailsLoading] = useState(true)
-  const [transactions, setTransactions] = useState<any[]>([])
-  const [transactionsLoading, setTransactionsLoading] = useState(true)
+export default function AlertPage({
+  params: { alertId },
+}: {
+  params: { alertId: string };
+}) {
+  console.log("AlertPage - Alert ID: ", alertId);
+  const router = useRouter();
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [balance, setBalance] = useState<string | null>(null);
+  const [walletDetailsLoading, setWalletDetailsLoading] = useState(true);
+  const [transactions, setTransactions] = useState<any[]>([]);
+  const [transactionsLoading, setTransactionsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const transactionAlert = await loadAlert(alertId)
+      const transactionAlert = await loadAlert(alertId);
       if (!transactionAlert) {
-        return
+        return;
       }
-      const address = transactionAlert.walletAddress
-      setWalletAddress(address)
+      const address = transactionAlert.walletAddress;
+      setWalletAddress(address);
 
-      const walletBalance = await fetchWalletBalance(address)
+      const walletBalance = await fetchWalletBalance(address);
       if (walletBalance) {
-        setBalance(`${walletBalance} SOL`)
+        setBalance(`${walletBalance} SOL`);
       } else {
-        setBalance(`?`)
+        setBalance(`?`);
       }
 
-      setWalletDetailsLoading(false)
+      setWalletDetailsLoading(false);
 
-      const sigList = await fetchWalletTransactions(address)
+      const sigList = await fetchWalletTransactions(address);
 
-      setTransactions(sigList)
-      setTransactionsLoading(false)
-    }
+      setTransactions(sigList);
+      setTransactionsLoading(false);
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const editPressed = () => {
-    console.log('Edit pressed for id: ', alertId)
+    console.log("Edit pressed for id: ", alertId);
     // TODO: edit alert
-    toast.success('Edit functionality coming soon...')
-  }
+    toast.success("Edit functionality coming soon...");
+  };
 
   const deletePressed = async () => {
-    console.log('Delete pressed for id: ', alertId)
+    console.log("Delete pressed for id: ", alertId);
 
-    await deleteAlert(alertId)
+    await deleteAlert(alertId);
 
     // TODO: remove webhook from helius
 
-    toast.success('Alert deleted')
-    router.push('/alerts')
-  }
+    toast.success("Alert deleted");
+    router.push("/alerts");
+  };
 
   return (
     <Card className="py-4 max-w-[400px]">
@@ -119,7 +123,7 @@ export default function AlertPage({ params: { alertId } }: { params: { alertId: 
               <Link
                 isExternal
                 color="foreground"
-                href={'https://solscan.io/account/' + walletAddress}
+                href={"https://solscan.io/account/" + walletAddress}
               >
                 {walletAddress && shortenString(walletAddress)}
               </Link>
@@ -145,21 +149,23 @@ export default function AlertPage({ params: { alertId } }: { params: { alertId: 
               {transactions.map((row) => (
                 <TableRow key={row.key}>
                   {(columnKey) => {
-                    const value = getKeyValue(row, columnKey)
-                    if (columnKey === 'signature') {
+                    const value = getKeyValue(row, columnKey);
+                    if (columnKey === "signature") {
                       return (
                         <TableCell>
                           <Link
                             isExternal
                             color="foreground"
-                            href={'https://solscan.io/tx/' + value}
+                            href={"https://solscan.io/tx/" + value}
                           >
                             {shortenString(value)}
                           </Link>
                         </TableCell>
-                      )
+                      );
                     } else {
-                      return <TableCell>{getKeyValue(row, columnKey)}</TableCell>
+                      return (
+                        <TableCell>{getKeyValue(row, columnKey)}</TableCell>
+                      );
                     }
                   }}
                 </TableRow>
@@ -180,5 +186,5 @@ export default function AlertPage({ params: { alertId } }: { params: { alertId: 
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

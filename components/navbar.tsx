@@ -19,7 +19,7 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useReducer, useState } from "react";
-import { getFirebaseAuth } from "@/libs/firebase";
+import { getFirebaseAuth } from "@/lib/firebase";
 import { usePathname } from "next/navigation";
 
 export const Navbar = () => {
