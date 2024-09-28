@@ -1,46 +1,43 @@
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: 'SolSignal',
-  description: 'Configure Solana alerts to notify you when onchain events occur.',
+  name: "SolSignal",
+  description:
+    "Configure Solana alerts to notify you when onchain events occur.",
   navItems: [
     {
-      label: 'New alert',
-      href: '/alerts/new',
+      label: "New alert",
+      href: "/alerts/new",
     },
     {
-      label: 'Your alerts',
-      href: '/alerts',
+      label: "Your alerts",
+      href: "/alerts",
     },
     {
-      label: 'About',
-      href: '/about',
+      label: "About",
+      href: "/about",
     },
     {
-      label: 'Settings',
-      href: '/settings',
+      label: "Settings",
+      href: "/settings",
     },
   ],
   navMenuItems: [
     {
-      label: 'New Alert',
-      href: '/alerts/new',
+      label: "New Alert",
+      href: "/alerts/new",
     },
     {
-      label: 'Your Alerts',
-      href: '/alerts',
+      label: "Your Alerts",
+      href: "/alerts",
     },
     {
-      label: 'About',
-      href: '/about',
+      label: "About",
+      href: "/about",
     },
     {
-      label: 'Settings',
-      href: '/settings',
-    },
-    {
-      label: 'Logout',
-      href: '/logout',
+      label: "Settings",
+      href: "/settings",
     },
   ],
-}
+};
