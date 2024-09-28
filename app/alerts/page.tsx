@@ -12,7 +12,6 @@ import {
   TableCell,
   getKeyValue,
 } from "@nextui-org/table";
-import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { Spinner } from "@nextui-org/spinner";
 import toast from "react-hot-toast";
@@ -20,28 +19,18 @@ import { Link } from "@nextui-org/link";
 import { shortenString } from "@/lib/stringUtils";
 import { PiInfoThin, PiTrashSimpleThin } from "react-icons/pi";
 import { siteConfig } from "@/config/site";
+import { useAuth } from "@/context/AuthUserContext";
 
 export default function AlertsPage() {
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
   const [alerts, setAlerts] = useState<any[]>([]);
   const [loadingAlerts, setLoadingAlerts] = useState(true);
 
-  const auth = getFirebaseAuth();
-  onAuthStateChanged(auth, (newUser: User | null) => {
-    // console.log("[onAuthStateChanged] User: ", user);
-    if (newUser != user) {
-      console.log("[onAuthStateChanged] Setting new user: ", newUser);
-      setUser(newUser);
-      // setLoading(false);
-    }
-  });
+  const { authUser, authLoading: loading } = useAuth();
 
   const loadAlertData = async () => {
-    // const currentUser = getCurrentUser();
-
-    // console.log("Current user: ", currentUser);
-    console.log("User: ", user?.uid);
-    const uid = user?.uid;
+    console.log("User: ", authUser?.uid);
+    const uid = authUser?.uid;
     if (!uid) {
       return;
     }
@@ -54,7 +43,7 @@ export default function AlertsPage() {
   useEffect(() => {
     console.log("useEffect");
     loadAlertData();
-  }, [user]);
+  }, [authUser]);
 
   // useEffect(() => {
   //   const getData = async () => {
@@ -112,7 +101,7 @@ export default function AlertsPage() {
     console.log("New alerts: ", newAlerts);
 
     const runDelete = async () => {
-      const uid = user?.uid;
+      const uid = authUser?.uid;
       if (!uid) {
         return;
       }

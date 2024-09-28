@@ -17,30 +17,21 @@ import { Spinner } from "@nextui-org/spinner";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { useReducer, useState } from "react";
-import { getFirebaseAuth } from "@/lib/firebase";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthUserContext";
+import { logout } from "@/lib/auth";
 
 export const Navbar = () => {
-  // const [isMenuOpen, setIsMenuOpen] = useReducer((current) => !current, false)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [loadingUser, setLoadingUser] = useState(true);
-  const [user, setUser] = useState<User | null | undefined>(null);
   const pathName = usePathname();
   console.log("pathName: ", pathName);
 
-  const auth = getFirebaseAuth();
-
-  onAuthStateChanged(auth, (user: User | null) => {
-    console.log("[onAuthStateChanged] User: ", user);
-    setUser(user);
-    setLoadingUser(false);
-  });
+  const { authUser, authLoading: loading } = useAuth();
 
   const logoutPressed = async () => {
-    setLoadingUser(true);
-    await auth.signOut();
+    // setLoadingUser(true);
+    logout();
   };
 
   return (
@@ -110,9 +101,9 @@ export const Navbar = () => {
         <NavbarContent className="pl-4" justify="end">
           <ThemeSwitch />
         </NavbarContent>
-        {loadingUser ? (
+        {loading ? (
           <Spinner />
-        ) : user ? (
+        ) : authUser ? (
           <Button
             as={Link}
             color="primary"
@@ -144,15 +135,15 @@ export const Navbar = () => {
                 color={pathName == item.href ? "primary" : "foreground"}
                 href={item.href}
                 size="lg"
-                onClick={() => setIsMenuOpen(false)}
+                onPress={() => setIsMenuOpen(false)}
               >
                 {item.label}
               </Link>
             </NavbarMenuItem>
           ))}
-          {loadingUser ? (
+          {loading ? (
             <Spinner />
-          ) : user ? (
+          ) : authUser ? (
             <Button
               as={Link}
               color="primary"
