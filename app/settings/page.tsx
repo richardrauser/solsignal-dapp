@@ -12,9 +12,22 @@ import {
 } from "@/lib/storage";
 import { useAuth } from "@/context/AuthUserContext";
 import { PageTitle } from "@/components/pageTitle";
+import {
+  PiCarProfile,
+  PiPerson,
+  PiPersonSimple,
+  PiWarningCircle,
+} from "react-icons/pi";
+import { Panel } from "@/components/panel";
+import { useRouter } from "next/navigation";
 
 export default function SettingsPage() {
   const { authUser, authLoading } = useAuth();
+  const router = useRouter();
+
+  if (!authUser) {
+    router.push("/login");
+  }
 
   const loginWithGooglePressed = async () => {
     console.log("loginWithGooglePressed");
@@ -31,7 +44,7 @@ export default function SettingsPage() {
     <div>
       <PageTitle>Settings</PageTitle>
 
-      <div className="panel mt-8">
+      <Panel>
         {authLoading ? (
           <div className="mt-8">
             <Spinner />
@@ -40,11 +53,13 @@ export default function SettingsPage() {
           <>
             {authUser ? (
               <div className="mt-8">
-                <div>
+                <div className="p-4 flex">
+                  <PiPerson className="m-2" />
                   <b>Your email:</b> {authUser.email}
                 </div>
-                <div>
-                  <b>Your alerts:</b> 0
+                <div className="p-4 flex">
+                  <PiWarningCircle className="m-2" />
+                  <b>Your alerts: </b> 0
                 </div>
               </div>
             ) : (
@@ -60,7 +75,7 @@ export default function SettingsPage() {
             )}
           </>
         )}
-      </div>
+      </Panel>
     </div>
   );
 }

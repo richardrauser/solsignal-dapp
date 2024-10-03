@@ -21,6 +21,7 @@ import { PiInfoThin, PiTrashSimpleThin } from "react-icons/pi";
 import { siteConfig } from "@/config/site";
 import { useAuth } from "@/context/AuthUserContext";
 import { PageTitle } from "@/components/pageTitle";
+import { Panel } from "@/components/panel";
 
 export default function AlertsPage() {
   // const [user, setUser] = useState<User | null>(null);
@@ -126,7 +127,7 @@ export default function AlertsPage() {
     <div>
       <PageTitle>Your alerts</PageTitle>
 
-      <div className="panel mt-8">
+      <Panel>
         {loadingAlerts ? (
           <Spinner />
         ) : (
@@ -212,7 +213,7 @@ export default function AlertsPage() {
             </Table>
           </>
         )}
-      </div>
+      </Panel>
     </div>
   );
 }

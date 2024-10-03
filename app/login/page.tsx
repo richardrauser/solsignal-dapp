@@ -11,20 +11,33 @@ import {
 } from "@/lib/storage";
 import { useAuth } from "@/context/AuthUserContext";
 import { PageTitle } from "@/components/pageTitle";
+import { useRouter } from "next/navigation";
+import { Panel } from "@/components/panel";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [loggingIn, setLoggingIn] = useState(false);
   const { authUser, authLoading } = useAuth();
+  const router = useRouter();
+
+  if (authUser) {
+    router.push("/settings");
+  }
 
   const loginWithGooglePressed = async () => {
     console.log("loginWithGooglePressed");
     setLoggingIn(true);
-    const user = await loginWithGoogle();
-    const existingUser = await userExists(user.uid);
-    if (!existingUser) {
-      await createUser(user);
-    } else {
-      updateUserLoginDetails(user.uid);
+    try {
+      const user = await loginWithGoogle();
+      const existingUser = await userExists(user.uid);
+      if (!existingUser) {
+        await createUser(user);
+      } else {
+        updateUserLoginDetails(user.uid);
+      }
+    } catch (error: any) {
+      console.log("Login error: " + error.message);
+      toast.error("Could not login. " + error.message);
     }
     setLoggingIn(false);
   };
@@ -32,7 +45,7 @@ export default function LoginPage() {
   return (
     <div>
       <PageTitle>Login</PageTitle>
-      <div className="panel mt-8">
+      <Panel>
         {authLoading ? (
           <div className="mt-8">
             <Spinner />
@@ -61,7 +74,7 @@ export default function LoginPage() {
             )}
           </>
         )}
-      </div>
+      </Panel>
     </div>
   );
 }

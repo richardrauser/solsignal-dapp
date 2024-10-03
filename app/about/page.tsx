@@ -1,4 +1,5 @@
 import { PageTitle } from "@/components/pageTitle";
+import { Panel } from "@/components/panel";
 import { title } from "@/components/primitives";
 import { Snippet } from "@nextui-org/snippet";
 
@@ -6,7 +7,7 @@ export default function AboutPage() {
   return (
     <div>
       <PageTitle>About</PageTitle>
-      <div className="panel mt-8">
+      <Panel>
         <p className="m-8">
           SolSignal.xyz is a web3 application that allows you to set up alerts
           for onchain Solana events. It was initially built in 2024 as part of
@@ -24,7 +25,7 @@ export default function AboutPage() {
           <li>More alert channels: SMS, push notifications, etc</li>
           <li>More customization options: this, that, and the other thing</li>
         </ul>
-      </div>
+      </Panel>
     </div>
   );
 }

@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import { PublicKey } from "@solana/web3.js";
 import { validateSolanaAddress } from "@/lib/stringUtils";
 import { PageTitle } from "@/components/pageTitle";
+import { Panel } from "@/components/panel";
 
 export default function NewAlertPage() {
   const [email, setEmail] = useState("");
@@ -101,7 +102,7 @@ export default function NewAlertPage() {
   return (
     <div>
       <PageTitle>New Alert</PageTitle>
-      <div className="panel">
+      <Panel>
         <h2 className={subtitle()}>💸 Transaction Alert</h2>
         <div className="mt-8">
           <div>Receive email when this wallet makes a transaction:</div>
@@ -152,7 +153,7 @@ export default function NewAlertPage() {
         >
           create balance alert
         </Button>
-      </div>{" "}
+      </Panel>{" "}
     </div>
   );
 }
