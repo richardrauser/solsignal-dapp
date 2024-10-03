@@ -1,5 +1,6 @@
 "use client";
 
+import { PageTitle } from "@/components/pageTitle";
 import { title } from "@/components/primitives";
 import { createWalletSubscription } from "@/lib/blockchain";
 import { Snippet } from "@nextui-org/snippet";
@@ -24,7 +25,7 @@ export default function TestPage() {
 
   return (
     <div>
-      <h1 className={title()}>Test</h1>
+      <PageTitle>Test</PageTitle>
       <div className="mt-8">
         <Snippet hideCopyButton hideSymbol variant="bordered">
           <span>

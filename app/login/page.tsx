@@ -10,6 +10,7 @@ import {
   userExists,
 } from "@/lib/storage";
 import { useAuth } from "@/context/AuthUserContext";
+import { PageTitle } from "@/components/pageTitle";
 
 export default function LoginPage() {
   const [loggingIn, setLoggingIn] = useState(false);
@@ -30,35 +31,37 @@ export default function LoginPage() {
 
   return (
     <div>
-      <h1 className={title()}>Login</h1>
-      {authLoading ? (
-        <div className="mt-8">
-          <Spinner />
-        </div>
-      ) : (
-        <>
-          {authUser ? (
-            <div className="mt-8">
-              <div>
-                <b>Your email:</b> {authUser.email}
+      <PageTitle>Login</PageTitle>
+      <div className="panel mt-8">
+        {authLoading ? (
+          <div className="mt-8">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {authUser ? (
+              <div className="mt-8">
+                <div>
+                  <b>Your email:</b> {authUser.email}
+                </div>
+                <div>
+                  <b>Your alerts:</b> 0
+                </div>
               </div>
-              <div>
-                <b>Your alerts:</b> 0
+            ) : (
+              <div className="mt-8">
+                <Button
+                  color="primary"
+                  variant="flat"
+                  onPress={loginWithGooglePressed}
+                >
+                  Login with Google
+                </Button>
               </div>
-            </div>
-          ) : (
-            <div className="mt-8">
-              <Button
-                color="primary"
-                variant="flat"
-                onPress={loginWithGooglePressed}
-              >
-                Login with Google
-              </Button>
-            </div>
-          )}
-        </>
-      )}
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

@@ -14,6 +14,7 @@ import {
 import toast from "react-hot-toast";
 import { PublicKey } from "@solana/web3.js";
 import { validateSolanaAddress } from "@/lib/stringUtils";
+import { PageTitle } from "@/components/pageTitle";
 
 export default function NewAlertPage() {
   const [email, setEmail] = useState("");
@@ -99,56 +100,59 @@ export default function NewAlertPage() {
 
   return (
     <div>
-      <h2 className={subtitle()}>💸 Transaction Alert</h2>
-      <div className="mt-8">
-        <div>Receive email when this wallet makes a transaction:</div>
-      </div>
+      <PageTitle>New Alert</PageTitle>
+      <div className="panel">
+        <h2 className={subtitle()}>💸 Transaction Alert</h2>
+        <div className="mt-8">
+          <div>Receive email when this wallet makes a transaction:</div>
+        </div>
 
-      <Input
-        className="mt-4"
-        type="string"
-        label="Solana wallet address"
-        value={transactionAlertWalletAddress}
-        onChange={(e) => setTransactionAlertWalletAddress(e.target.value)}
-        placeholder="0x..."
-        startContent={
-          <PiWallet className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
-        }
-      ></Input>
+        <Input
+          className="mt-4"
+          type="string"
+          label="Solana wallet address"
+          value={transactionAlertWalletAddress}
+          onChange={(e) => setTransactionAlertWalletAddress(e.target.value)}
+          placeholder="0x..."
+          startContent={
+            <PiWallet className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
+          }
+        ></Input>
 
-      <Button
-        className="mt-4"
-        color="primary"
-        onPress={createTransactionAlertPressed}
-        variant="flat"
-      >
-        create transaction alert
-      </Button>
+        <Button
+          className="mt-4"
+          color="primary"
+          onPress={createTransactionAlertPressed}
+          variant="flat"
+        >
+          create transaction alert
+        </Button>
 
-      <h2 className={subtitle({ class: "mt-12" })}>📈 Balance Alert</h2>
-      <div className="mt-4">
-        <div>Receive email when this wallet crosses a threshold:</div>
-      </div>
-      <Input
-        className="mt-4"
-        type="string"
-        label="Solana wallet address"
-        value={balanceAlertWalletAddress}
-        onChange={(e) => setBalanceAlertWalletAddress(e.target.value)}
-        placeholder="0x..."
-        startContent={
-          <PiWallet className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
-        }
-      ></Input>
+        <h2 className={subtitle({ class: "mt-12" })}>📈 Balance Alert</h2>
+        <div className="mt-4">
+          <div>Receive email when this wallet crosses a threshold:</div>
+        </div>
+        <Input
+          className="mt-4"
+          type="string"
+          label="Solana wallet address"
+          value={balanceAlertWalletAddress}
+          onChange={(e) => setBalanceAlertWalletAddress(e.target.value)}
+          placeholder="0x..."
+          startContent={
+            <PiWallet className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
+          }
+        ></Input>
 
-      <Button
-        className="mt-4"
-        color="primary"
-        onPress={createBalanceAlertPressed}
-        variant="flat"
-      >
-        create balance alert
-      </Button>
+        <Button
+          className="mt-4"
+          color="primary"
+          onPress={createBalanceAlertPressed}
+          variant="flat"
+        >
+          create balance alert
+        </Button>
+      </div>{" "}
     </div>
   );
 }

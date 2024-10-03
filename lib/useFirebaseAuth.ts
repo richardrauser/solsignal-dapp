@@ -18,12 +18,7 @@ export default function useFirebaseAuth() {
   useEffect(() => {
     const auth = getFirebaseAuth();
     const unsubscribe = onAuthStateChanged(auth, (newUser: User | null) => {
-      console.log("userFirebaseAuth - auth state changed: ", newUser);
-      if (!newUser) {
-        setAuthLoading(false);
-        return;
-      }
-
+      console.log("useFirebaseAuth - auth state changed: ", newUser);
       setAuthLoading(true);
       setAuthUser(newUser);
       setAuthLoading(false);

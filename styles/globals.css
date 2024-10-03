@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Chakra Petch", sans-serif !important;
+}
+
+h1 {
+  justify-content: left !important;
+  text-align: left !important;
+}
+
+div.panel {
+  background-color: #222;
+  border: 1px solid #17c964;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+  min-width: 480px;
+}
+
+h1.pageTitle {
+  /* font-size: 24px; */
+}

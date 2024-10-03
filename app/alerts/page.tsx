@@ -20,6 +20,7 @@ import { shortenString } from "@/lib/stringUtils";
 import { PiInfoThin, PiTrashSimpleThin } from "react-icons/pi";
 import { siteConfig } from "@/config/site";
 import { useAuth } from "@/context/AuthUserContext";
+import { PageTitle } from "@/components/pageTitle";
 
 export default function AlertsPage() {
   // const [user, setUser] = useState<User | null>(null);
@@ -123,9 +124,9 @@ export default function AlertsPage() {
 
   return (
     <div>
-      <h1 className={title()}>Your alerts</h1>
+      <PageTitle>Your alerts</PageTitle>
 
-      <div className="mt-8">
+      <div className="panel mt-8">
         {loadingAlerts ? (
           <Spinner />
         ) : (
