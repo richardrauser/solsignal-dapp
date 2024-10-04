@@ -65,12 +65,8 @@ export default function LoginPage() {
           <>
             {authUser ? (
               <div className="mt-8">
-                <div>
-                  <b>Your email:</b> {authUser.email}
-                </div>
-                <div>
-                  <b>Your alerts:</b> 0
-                </div>
+                <div>Your email: {authUser.email}</div>
+                <div>Your alerts: 0</div>
               </div>
             ) : (
               <>
