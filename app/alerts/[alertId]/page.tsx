@@ -29,6 +29,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { fetchWalletBalance, fetchWalletTransactions } from "@/lib/blockchain";
 import { PageTitle } from "@/components/pageTitle";
+import { withAuth } from "@/components/withAuth";
 
 const columns = [
   {
@@ -45,11 +46,7 @@ const columns = [
   // },
 ];
 
-export default function AlertPage({
-  params: { alertId },
-}: {
-  params: { alertId: string };
-}) {
+function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
   console.log("AlertPage - Alert ID: ", alertId);
   const router = useRouter();
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -192,3 +189,5 @@ export default function AlertPage({
     </>
   );
 }
+
+export default withAuth(AlertPage);

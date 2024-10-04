@@ -1,9 +1,8 @@
 "use client";
-import { title } from "@/components/primitives";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
 import { Spinner } from "@nextui-org/spinner";
-import { loginWithGoogle } from "@/lib/auth";
+import { loginWithEmail, loginWithGoogle } from "@/lib/auth";
 import {
   createUser,
   updateUserLogin as updateUserLoginDetails,
@@ -14,15 +13,27 @@ import { PageTitle } from "@/components/pageTitle";
 import { useRouter } from "next/navigation";
 import { Panel } from "@/components/panel";
 import toast from "react-hot-toast";
+import { Input } from "@nextui-org/input";
+import { Divider } from "@nextui-org/divider";
 
 export default function LoginPage() {
   const [loggingIn, setLoggingIn] = useState(false);
   const { authUser, authLoading } = useAuth();
+  const [email, setEmail] = useState("");
   const router = useRouter();
 
   if (authUser) {
     router.push("/settings");
   }
+
+  const loginWithEmailPressed = async () => {
+    console.log("loginWithEmailPressed: " + email);
+    setLoggingIn(true);
+
+    loginWithEmail(email, window.location.origin);
+
+    setLoggingIn(false);
+  };
 
   const loginWithGooglePressed = async () => {
     console.log("loginWithGooglePressed");
@@ -62,15 +73,31 @@ export default function LoginPage() {
                 </div>
               </div>
             ) : (
-              <div className="mt-8">
+              <>
+                <Input
+                  label="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                ></Input>
                 <Button
+                  className="m-4"
                   color="primary"
                   variant="flat"
-                  onPress={loginWithGooglePressed}
+                  onPress={loginWithEmailPressed}
                 >
-                  Login with Google
+                  Login with Email
                 </Button>
-              </div>
+
+                <Divider></Divider>
+                <div className="m-4">
+                  <Button
+                    color="primary"
+                    variant="flat"
+                    onPress={loginWithGooglePressed}
+                  >
+                    Login with Google
+                  </Button>
+                </div>
+              </>
             )}
           </>
         )}

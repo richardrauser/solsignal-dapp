@@ -30,8 +30,15 @@ export default function AboutPage() {
             Richard Rauser
           </Link>{" "}
           as part of the
-          <a href="https://www.colosseum.org/radar"> Colosseum Radar</a> Global
-          Hackathon.
+          <Link
+            isExternal
+            className=""
+            href="https://www.colosseum.org/radar"
+            title="Colossuem Radar"
+          >
+            Solana Radar Global Hackathon
+          </Link>
+          .
         </p>
 
         <p className="m-8">

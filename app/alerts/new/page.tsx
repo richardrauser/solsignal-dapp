@@ -129,7 +129,7 @@ export default function NewAlertPage() {
           create transaction alert
         </Button>
 
-        <h2 className={subtitle({ class: "mt-12" })}>📈 Balance Alert</h2>
+        {/* <h2 className={subtitle({ class: "mt-12" })}>📈 Balance Alert</h2>
         <div className="mt-4">
           <div>Receive email when this wallet crosses a threshold:</div>
         </div>
@@ -152,7 +152,7 @@ export default function NewAlertPage() {
           variant="flat"
         >
           create balance alert
-        </Button>
+        </Button> */}
       </Panel>{" "}
     </div>
   );

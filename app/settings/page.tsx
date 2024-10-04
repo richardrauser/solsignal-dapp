@@ -1,10 +1,8 @@
 "use client";
-import { title } from "@/components/primitives";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
 import { Spinner } from "@nextui-org/spinner";
 import { loginWithGoogle } from "@/lib/auth";
-import { getFirebaseAuth } from "@/lib/firebase";
 import {
   createUser,
   updateUserLogin as updateUserLoginDetails,
@@ -19,15 +17,10 @@ import {
   PiWarningCircle,
 } from "react-icons/pi";
 import { Panel } from "@/components/panel";
-import { useRouter } from "next/navigation";
+import { withAuth } from "@/components/withAuth";
 
-export default function SettingsPage() {
+function SettingsPage() {
   const { authUser, authLoading } = useAuth();
-  const router = useRouter();
-
-  if (!authUser) {
-    router.push("/login");
-  }
 
   const loginWithGooglePressed = async () => {
     console.log("loginWithGooglePressed");
@@ -79,3 +72,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+export default withAuth(SettingsPage);

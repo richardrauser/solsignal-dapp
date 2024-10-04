@@ -1,6 +1,4 @@
 "use client";
-import { title } from "@/components/primitives";
-import { getFirebaseAuth } from "@/lib/firebase";
 import { deleteAlert, loadAlerts } from "@/lib/storage";
 import { Button } from "@nextui-org/button";
 import {
@@ -22,8 +20,9 @@ import { siteConfig } from "@/config/site";
 import { useAuth } from "@/context/AuthUserContext";
 import { PageTitle } from "@/components/pageTitle";
 import { Panel } from "@/components/panel";
+import { withAuth } from "@/components/withAuth";
 
-export default function AlertsPage() {
+function AlertsPage() {
   // const [user, setUser] = useState<User | null>(null);
   const [alerts, setAlerts] = useState<any[]>([]);
   const [loadingAlerts, setLoadingAlerts] = useState(true);
@@ -217,3 +216,5 @@ export default function AlertsPage() {
     </div>
   );
 }
+
+export default withAuth(AlertsPage);
