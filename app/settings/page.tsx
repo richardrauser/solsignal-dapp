@@ -6,7 +6,7 @@ import { loginWithGoogle } from "@/lib/auth";
 import { Chip } from "@nextui-org/chip";
 import {
   createUser,
-  loadAlertCount,
+  loadUserAlertCount,
   updateUserLogin as updateUserLoginDetails,
   userExists,
 } from "@/lib/storage";
@@ -31,7 +31,7 @@ function SettingsPage() {
       if (!authUser) {
         return;
       }
-      const alertCount = await loadAlertCount(authUser?.uid);
+      const alertCount = await loadUserAlertCount(authUser?.uid);
       setAlertCount(alertCount);
       setLoadingAlertCount(false);
     };

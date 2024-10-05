@@ -11,13 +11,14 @@ import {
   checkWallertAlertExists as checkTransactionAlertExists,
   createBalanceAlert,
   createWalletAlert as createTransactionAlert,
-  loadAlertCount,
+  loadSystemAlertCount,
+  loadUserAlertCount,
 } from "@/lib/storage";
 import toast from "react-hot-toast";
 import { validateSolanaAddress } from "@/lib/stringUtils";
 import { PageTitle } from "@/components/pageTitle";
 import { Panel } from "@/components/panel";
-import { MAX_ALERT_COUNT } from "@/lib/consts";
+import { MAX_ALERT_COUNT_SYSTEM, MAX_ALERT_COUNT_USER } from "@/lib/consts";
 
 export default function NewAlertPage() {
   const [email, setEmail] = useState("");
@@ -64,11 +65,21 @@ export default function NewAlertPage() {
       return;
     }
 
-    const currentAlertCount = await loadAlertCount(currentUser.uid);
+    const currentAlertCount = await loadUserAlertCount(currentUser.uid);
 
-    if (currentAlertCount >= MAX_ALERT_COUNT) {
+    if (currentAlertCount >= MAX_ALERT_COUNT_USER) {
       toast.error(
-        `You have reached the maximum number of ${MAX_ALERT_COUNT} free alerts.`
+        `You have reached the maximum number of ${MAX_ALERT_COUNT_USER} free alerts.`
+      );
+      setLoading(false);
+      return;
+    }
+
+    const systemAlertCount = await loadSystemAlertCount();
+
+    if (currentAlertCount >= MAX_ALERT_COUNT_SYSTEM) {
+      toast.error(
+        `Sorry, SolSignal has reached the max number of system-wide alerts during its testing phase. Please try again another time.`
       );
       setLoading(false);
       return;

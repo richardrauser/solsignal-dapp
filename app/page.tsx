@@ -3,7 +3,7 @@ import { button as buttonStyles } from "@nextui-org/theme";
 
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
-import { MAX_ALERT_COUNT } from "@/lib/consts";
+import { MAX_ALERT_COUNT_USER } from "@/lib/consts";
 
 export default function Home() {
   return (
@@ -24,7 +24,7 @@ export default function Home() {
           SOL{`"`}
         </p>{" "}
         <h2 className={subtitle({ class: "mt-4" })}>
-          Your first {MAX_ALERT_COUNT} alerts are free!
+          Your first {MAX_ALERT_COUNT_USER} alerts are free!
         </h2>
       </div>
 

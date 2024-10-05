@@ -14,7 +14,7 @@ import {
   where,
 } from "firebase/firestore";
 import { getFirebase } from "./firebase";
-import { MAX_ALERT_COUNT } from "./consts";
+import { MAX_ALERT_COUNT_USER } from "./consts";
 
 enum AlertType {
   transaction = "transaction",
@@ -101,11 +101,11 @@ export async function createWalletAlert(
 ) {
   console.log("createWalletAlert: ", walletAddress, email);
 
-  const currentAlertCount = await loadAlertCount(uid);
+  const currentAlertCount = await loadUserAlertCount(uid);
 
   if (currentAlertCount >= 3) {
     throw new Error(
-      `You have reached the maximum number of ${MAX_ALERT_COUNT} free alerts.`
+      `You have reached the maximum number of ${MAX_ALERT_COUNT_USER} free alerts.`
     );
   }
 
@@ -192,8 +192,8 @@ export async function loadAlerts(uid: string) {
   return alerts;
 }
 
-export async function loadAlertCount(uid: string) {
-  console.log("loadAlertCount");
+export async function loadUserAlertCount(uid: string) {
+  console.log("loadUserAlertCount");
   const firestore = await getStorage();
   const alertsCollection = collection(firestore, "alerts");
 
@@ -202,7 +202,23 @@ export async function loadAlertCount(uid: string) {
 
   var alertCount = querySnapshot.data().count;
 
-  console.log("Alert count: ", alertCount);
+  console.log("User alert count: ", alertCount);
+
+  return alertCount;
+}
+
+export async function loadSystemAlertCount() {
+  console.log("loadSystemAlertCount");
+  const firestore = await getStorage();
+  const configCollection = collection(firestore, "config");
+
+  const configDoc = await getDoc(doc(configCollection, "solsignal"));
+
+  var configData = configDoc.data();
+
+  var alertCount = configData?.systemAlertCount;
+
+  console.log("System alert count: ", alertCount);
 
   return alertCount;
 }
