@@ -1,10 +1,11 @@
 "use client";
 import { Button } from "@nextui-org/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "@nextui-org/spinner";
 import { loginWithGoogle } from "@/lib/auth";
 import {
   createUser,
+  loadAlertCount,
   updateUserLogin as updateUserLoginDetails,
   userExists,
 } from "@/lib/storage";
@@ -21,6 +22,20 @@ import { withAuth } from "@/components/withAuth";
 
 function SettingsPage() {
   const { authUser, authLoading } = useAuth();
+  const [loadingAlertCount, setLoadingAlertCount] = useState(true);
+  const [alertCount, setAlertCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!authUser) {
+        return;
+      }
+      const alertCount = await loadAlertCount(authUser?.uid);
+      setAlertCount(alertCount);
+      setLoadingAlertCount(false);
+    };
+    fetchData();
+  }, [authUser]);
 
   const loginWithGooglePressed = async () => {
     console.log("loginWithGooglePressed");
@@ -52,19 +67,12 @@ function SettingsPage() {
                 </div>
                 <div className="p-4 flex">
                   <PiWarningCircle className="m-2" />
-                  <b>Your alerts: </b> 0
+                  <b>Your alerts: </b>{" "}
+                  {loadingAlertCount ? <Spinner className="sm" /> : alertCount}
                 </div>
               </div>
             ) : (
-              <div className="mt-8">
-                <Button
-                  color="primary"
-                  variant="flat"
-                  onPress={loginWithGooglePressed}
-                >
-                  Login with Google
-                </Button>
-              </div>
+              <div className="mt-8">No user logged in.</div>
             )}
           </>
         )}

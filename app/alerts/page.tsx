@@ -210,6 +210,11 @@ function AlertsPage() {
                 </TableBody>
               )}
             </Table>
+            <Link href="/alerts/new">
+              <Button className="mt-4" color="primary" variant="flat">
+                create new alert
+              </Button>
+            </Link>
           </>
         )}
       </Panel>
