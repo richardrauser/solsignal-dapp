@@ -5,14 +5,15 @@ import {
   sendSignInLinkToEmail,
 } from "firebase/auth";
 import { User } from "firebase/auth";
-import { getFirebaseAuth } from "./firebase";
 import toast from "react-hot-toast";
+
+import { getFirebaseAuth } from "./firebase";
 
 export const LOCAL_STORE_EMAIL_FOR_AUTH_KEY = "solSignalEmailForAuth";
 
 export const loginWithEmail = async (email: string, continueUrl: string) => {
   console.log(
-    `loginWithEmail - logging in with email ${email} and continue URL ${continueUrl}`
+    `loginWithEmail - logging in with email ${email} and continue URL ${continueUrl}`,
   );
   try {
     const auth = getAuth();
@@ -20,6 +21,7 @@ export const loginWithEmail = async (email: string, continueUrl: string) => {
       url: `${continueUrl}/auth/link`,
       handleCodeInApp: true,
     };
+
     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
     window.localStorage.setItem(LOCAL_STORE_EMAIL_FOR_AUTH_KEY, email);
     toast.success("Email sent. Check your inbox to complete login.");
@@ -30,12 +32,15 @@ export const loginWithEmail = async (email: string, continueUrl: string) => {
 export async function loginWithGoogle(): Promise<User> {
   const provider = new GoogleAuthProvider();
   const auth = getFirebaseAuth();
+
   return signInWithPopup(auth, provider)
     .then((result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = GoogleAuthProvider.credentialFromResult(result);
+
       if (credential === null) {
         const errorMessage = "Error logging in with Google: credential is null";
+
         console.log(errorMessage);
         throw Error(errorMessage);
       }
@@ -56,6 +61,7 @@ export async function loginWithGoogle(): Promise<User> {
       const email = error.customData.email;
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
+
       console.log("Error logging in with Google: ", error);
       throw error;
     });
@@ -63,6 +69,7 @@ export async function loginWithGoogle(): Promise<User> {
 
 export async function logout() {
   const auth = getFirebaseAuth();
+
   return auth.signOut();
 }
 
@@ -70,5 +77,6 @@ async function storeUser(user: User) {}
 
 export function getCurrentUser() {
   const auth = getFirebaseAuth();
+
   return auth.currentUser;
 }

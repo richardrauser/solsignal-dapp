@@ -2,15 +2,16 @@
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
 import { Spinner } from "@nextui-org/spinner";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { Input } from "@nextui-org/input";
+import { Divider } from "@nextui-org/divider";
+
 import { loginWithEmail, loginWithGoogle } from "@/lib/auth";
 import { createUser, updateUserLoginDetails, userExists } from "@/lib/storage";
 import { useAuth } from "@/context/AuthUserContext";
 import { PageTitle } from "@/components/pageTitle";
-import { useRouter } from "next/navigation";
 import { Panel } from "@/components/panel";
-import toast from "react-hot-toast";
-import { Input } from "@nextui-org/input";
-import { Divider } from "@nextui-org/divider";
 
 export default function LoginPage() {
   const [loggingIn, setLoggingIn] = useState(false);
@@ -37,6 +38,7 @@ export default function LoginPage() {
     try {
       const user = await loginWithGoogle();
       const existingUser = await userExists(user.uid);
+
       if (!existingUser) {
         await createUser(user);
       } else {
@@ -69,7 +71,7 @@ export default function LoginPage() {
                 <Input
                   label="Email"
                   onChange={(e) => setEmail(e.target.value)}
-                ></Input>
+                />
                 <Button
                   className="m-4"
                   color="primary"
@@ -79,7 +81,7 @@ export default function LoginPage() {
                   Login with Email
                 </Button>
 
-                <Divider></Divider>
+                <Divider />
                 <div className="m-4">
                   <Button
                     color="primary"

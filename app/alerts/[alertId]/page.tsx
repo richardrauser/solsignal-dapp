@@ -20,11 +20,12 @@ import {
   PiTrashSimpleThin,
   PiWallet,
 } from "react-icons/pi";
-import { shortenString } from "@/lib/stringUtils";
-import { deleteAlert, loadAlert } from "@/lib/storage";
 import { Spinner } from "@nextui-org/spinner";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+
+import { deleteAlert, loadAlert } from "@/lib/storage";
+import { shortenString } from "@/lib/stringUtils";
 import { fetchWalletBalance, fetchWalletTransactions } from "@/lib/blockchain";
 import { PageTitle } from "@/components/pageTitle";
 import { withAuth } from "@/components/withAuth";
@@ -57,13 +58,16 @@ function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       const transactionAlert = await loadAlert(alertId);
+
       if (!transactionAlert) {
         return;
       }
       const address = transactionAlert.walletAddress;
+
       setWalletAddress(address);
 
       const walletBalance = await fetchWalletBalance(address);
+
       if (walletBalance) {
         setBalance(`${walletBalance} SOL`);
       } else {
@@ -73,6 +77,7 @@ function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
       setWalletDetailsLoading(false);
 
       const sigList = await fetchWalletTransactions(address);
+
       console.log("Transactions: ", sigList);
 
       setTransactions(sigList);
@@ -140,7 +145,7 @@ function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
             {transactionsLoading ? (
               <Spinner className="mt-2" />
             ) : (
-              <Table className="mt-2" aria-label="Recent transactions">
+              <Table aria-label="Recent transactions" className="mt-2">
                 <TableHeader>
                   {columns.map((column) => (
                     <TableColumn key={column.key}>{column.label}</TableColumn>
@@ -151,6 +156,7 @@ function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
                     <TableRow key={row.key}>
                       {(columnKey) => {
                         const value = getKeyValue(row, columnKey);
+
                         if (columnKey === "signature") {
                           return (
                             <TableCell>
@@ -177,11 +183,11 @@ function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
           </CardBody>
           <Divider />
           <CardFooter className="grid grid-cols-2">
-            <Button onPress={editPressed} className="m-2">
+            <Button className="m-2" onPress={editPressed}>
               <PiNotePencilThin />
               Edit
             </Button>
-            <Button onPress={deletePressed} className="m-2">
+            <Button className="m-2" onPress={deletePressed}>
               <PiTrashSimpleThin />
               Delete
             </Button>

@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
-import useFirebaseAuth from "../lib/useFirebaseAuth";
 import { User } from "firebase/auth";
+
+import useFirebaseAuth from "../lib/useFirebaseAuth";
 
 type AuthUserContextType = {
   authUser: User | null;
@@ -16,6 +17,7 @@ const authUserContext = createContext(authUserContextType);
 
 export function AuthUserProvider({ children }: { children: React.ReactNode }) {
   const auth = useFirebaseAuth();
+
   return (
     <authUserContext.Provider value={auth}>{children}</authUserContext.Provider>
   );

@@ -1,9 +1,10 @@
 "use client";
-import { Button } from "@nextui-org/button";
 import { useEffect, useState } from "react";
 import { Spinner } from "@nextui-org/spinner";
-import { loginWithGoogle } from "@/lib/auth";
 import { Chip } from "@nextui-org/chip";
+import { PiPerson, PiWarningCircle } from "react-icons/pi";
+
+import { loginWithGoogle } from "@/lib/auth";
 import {
   createUser,
   loadUserAlertCount,
@@ -12,12 +13,6 @@ import {
 } from "@/lib/storage";
 import { useAuth } from "@/context/AuthUserContext";
 import { PageTitle } from "@/components/pageTitle";
-import {
-  PiCarProfile,
-  PiPerson,
-  PiPersonSimple,
-  PiWarningCircle,
-} from "react-icons/pi";
 import { Panel } from "@/components/panel";
 import { withAuth } from "@/components/withAuth";
 
@@ -32,9 +27,11 @@ function SettingsPage() {
         return;
       }
       const alertCount = await loadUserAlertCount(authUser?.uid);
+
       setAlertCount(alertCount);
       setLoadingAlertCount(false);
     };
+
     fetchData();
   }, [authUser]);
 
@@ -42,6 +39,7 @@ function SettingsPage() {
     console.log("loginWithGooglePressed");
     const user = await loginWithGoogle();
     const existingUser = await userExists(user.uid);
+
     if (!existingUser) {
       await createUser(user);
     } else {

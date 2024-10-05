@@ -1,10 +1,11 @@
 "use client";
-import { subtitle, title } from "@/components/primitives";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useEffect, useState } from "react";
 import { PiWallet } from "react-icons/pi";
 import { Spinner } from "@nextui-org/spinner";
+import toast from "react-hot-toast";
+
 import { getCurrentUser } from "@/lib/auth";
 import {
   checkBalanceAlertExists,
@@ -14,7 +15,6 @@ import {
   loadSystemAlertCount,
   loadUserAlertCount,
 } from "@/lib/storage";
-import toast from "react-hot-toast";
 import { validateSolanaAddress } from "@/lib/stringUtils";
 import { PageTitle } from "@/components/pageTitle";
 import { Panel } from "@/components/panel";
@@ -41,32 +41,38 @@ export default function NewAlertPage() {
 
     if (!currentUser) {
       const errorMessage = "No user logged in";
+
       toast.error(
-        "Thanks for showing interest! Please login before creating your alert."
+        "Thanks for showing interest! Please login before creating your alert.",
       );
       // console.error(errorMessage);
       // throw Error(errorMessage);
       setLoading(false);
+
       return;
     }
 
     const isAddressValid = validateSolanaAddress(transactionAlertWalletAddress);
+
     if (!isAddressValid) {
       toast.error("Invalid Solana wallet address.");
       setLoading(false);
+
       return;
     }
 
     const alertExists = await checkTransactionAlertExists(
       currentUser.uid,
       transactionAlertWalletAddress,
-      email
+      email,
     );
+
     if (alertExists) {
       toast.error(
-        `An alert with those parameters already exists. You can see it in "Your alerts"`
+        `An alert with those parameters already exists. You can see it in "Your alerts"`,
       );
       setLoading(false);
+
       return;
     }
 
@@ -74,9 +80,10 @@ export default function NewAlertPage() {
 
     if (currentAlertCount >= MAX_ALERT_COUNT_USER) {
       toast.error(
-        `You have reached the maximum number of ${MAX_ALERT_COUNT_USER} free alerts.`
+        `You have reached the maximum number of ${MAX_ALERT_COUNT_USER} free alerts.`,
       );
       setLoading(false);
+
       return;
     }
 
@@ -84,9 +91,10 @@ export default function NewAlertPage() {
 
     if (currentAlertCount >= MAX_ALERT_COUNT_SYSTEM) {
       toast.error(
-        `Sorry, SolSignal has reached the max number of system-wide alerts during its testing phase. Please try again another time.`
+        `Sorry, SolSignal has reached the max number of system-wide alerts during its testing phase. Please try again another time.`,
       );
       setLoading(false);
+
       return;
     }
 
@@ -94,7 +102,7 @@ export default function NewAlertPage() {
       await createTransactionAlert(
         currentUser.uid,
         transactionAlertWalletAddress,
-        email
+        email,
       );
       toast.success("Transaction alert created!");
     } catch (error) {
@@ -110,28 +118,33 @@ export default function NewAlertPage() {
 
     if (!currentUser) {
       const errorMessage = "No user logged in";
+
       console.error(errorMessage);
 
       throw Error(errorMessage);
     }
 
     const isAddressValid = validateSolanaAddress(balanceAlertWalletAddress);
+
     if (!isAddressValid) {
       toast.error("Invalid Solana wallet address.");
       setLoading(false);
+
       return;
     }
 
     const alertExists = await checkBalanceAlertExists(
       currentUser.uid,
       balanceAlertWalletAddress,
-      email
+      email,
     );
+
     if (alertExists) {
       toast.error(
-        `An alert with those parameters already exists. You can see it in "Your alerts"`
+        `An alert with those parameters already exists. You can see it in "Your alerts"`,
       );
       setLoading(false);
+
       return;
     }
 
@@ -148,7 +161,6 @@ export default function NewAlertPage() {
           <Spinner />
         ) : (
           <>
-            <h2 className={subtitle()}></h2>
             <div className="mt-8">
               <div>
                 <b>💸 Transaction Alert -</b> Receive an email when this wallet
@@ -158,21 +170,21 @@ export default function NewAlertPage() {
 
             <Input
               className="mt-4"
-              type="string"
               label="Solana wallet address"
-              value={transactionAlertWalletAddress}
-              onChange={(e) => setTransactionAlertWalletAddress(e.target.value)}
               placeholder="0x..."
               startContent={
                 <PiWallet className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
               }
+              type="string"
+              value={transactionAlertWalletAddress}
+              onChange={(e) => setTransactionAlertWalletAddress(e.target.value)}
             />
 
             <Button
               className="mt-4"
               color="primary"
-              onPress={createTransactionAlertPressed}
               variant="flat"
+              onPress={createTransactionAlertPressed}
             >
               create transaction alert
             </Button>

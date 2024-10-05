@@ -1,20 +1,17 @@
 "use client";
 
-import { LOCAL_STORE_EMAIL_FOR_AUTH_KEY } from "@/lib/auth";
-import { getFirebaseAuth } from "@/lib/firebase";
-import {
-  getAdditionalUserInfo,
-  isSignInWithEmailLink,
-  signInWithEmailLink,
-} from "firebase/auth";
+import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Spinner } from "@nextui-org/spinner";
-import { Panel } from "@/components/panel";
-import { PageTitle } from "@/components/pageTitle";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
+
+import { PageTitle } from "@/components/pageTitle";
+import { Panel } from "@/components/panel";
+import { getFirebaseAuth } from "@/lib/firebase";
+import { LOCAL_STORE_EMAIL_FOR_AUTH_KEY } from "@/lib/auth";
 import { createUser, updateUserLoginDetails, userExists } from "@/lib/storage";
 
 export default function AuthLinkPage() {
@@ -34,6 +31,7 @@ export default function AuthLinkPage() {
       // Get the email if available. This should be available if the user completes
       // the flow on the same device where they started it.
       let email = window.localStorage.getItem(LOCAL_STORE_EMAIL_FOR_AUTH_KEY);
+
       if (!email) {
         console.log("AuthLinkPage - No email found in local storage.");
         // User opened the link on a different device. To prevent session fixation
@@ -68,11 +66,13 @@ export default function AuthLinkPage() {
               console.log("AuthLinkPage - User not found.");
               setErrorMessage("User not found.");
               setLoading(false);
+
               return;
             }
 
             const updateUser = async () => {
               const existingUser = await userExists(user.uid);
+
               if (!existingUser) {
                 await createUser(user);
               } else {

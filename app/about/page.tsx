@@ -1,8 +1,7 @@
+import { Link } from "@nextui-org/link";
+
 import { PageTitle } from "@/components/pageTitle";
 import { Panel } from "@/components/panel";
-import { title } from "@/components/primitives";
-import { Snippet } from "@nextui-org/snippet";
-import { Link } from "@nextui-org/link";
 
 export default function AboutPage() {
   return (

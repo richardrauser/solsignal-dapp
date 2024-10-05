@@ -4,7 +4,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  documentId,
   getCountFromServer,
   getDoc,
   getDocs,
@@ -13,6 +12,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
+
 import { getFirebase } from "./firebase";
 import { MAX_ALERT_COUNT_USER } from "./consts";
 
@@ -23,6 +23,7 @@ enum AlertType {
 
 async function getStorage() {
   const firebase = getFirebase();
+
   return getFirestore(firebase);
 }
 export async function userExists(uid: string) {
@@ -77,7 +78,7 @@ export async function updateUserLoginDetails(uid: string) {
 export async function checkWallertAlertExists(
   uid: string,
   walletAddress: string,
-  email: string
+  email: string,
 ) {
   const firestore = await getStorage();
   const alertType = AlertType.transaction;
@@ -88,16 +89,17 @@ export async function checkWallertAlertExists(
     where("uid", "==", uid),
     where("type", "==", alertType),
     where("walletAddress", "==", walletAddress),
-    where("email", "==", email)
+    where("email", "==", email),
   );
   const countResult = await getCountFromServer(alertsQuery);
+
   return countResult.data().count > 0;
 }
 
 export async function createWalletAlert(
   uid: string,
   walletAddress: string,
-  email: string
+  email: string,
 ) {
   console.log("createWalletAlert: ", walletAddress, email);
 
@@ -105,7 +107,7 @@ export async function createWalletAlert(
 
   if (currentAlertCount >= 3) {
     throw new Error(
-      `You have reached the maximum number of ${MAX_ALERT_COUNT_USER} free alerts.`
+      `You have reached the maximum number of ${MAX_ALERT_COUNT_USER} free alerts.`,
     );
   }
 
@@ -120,6 +122,7 @@ export async function createWalletAlert(
     email,
     createdAt: new Date(),
   };
+
   console.log("Creating wallet alert: ", data);
 
   addDoc(alertsCollection, data);
@@ -128,7 +131,7 @@ export async function createWalletAlert(
 export async function checkBalanceAlertExists(
   uid: string,
   walletAddress: string,
-  email: string
+  email: string,
 ) {
   const firestore = await getStorage();
   const alertType = AlertType.balance;
@@ -139,16 +142,17 @@ export async function checkBalanceAlertExists(
     where("uid", "==", uid),
     where("type", "==", alertType),
     where("walletAddress", "==", walletAddress),
-    where("email", "==", email)
+    where("email", "==", email),
   );
   const countResult = await getCountFromServer(alertsQuery);
+
   return countResult.data().count > 0;
 }
 
 export async function createBalanceAlert(
   uid: string,
   walletAddress: string,
-  email: string
+  email: string,
 ) {
   console.log("createBalanceAlert: ", walletAddress, email);
   const firestore = await getStorage();
@@ -162,6 +166,7 @@ export async function createBalanceAlert(
     email,
     createdAt: new Date(),
   };
+
   console.log("Creating balance alert: ", data);
 
   addDoc(alertsCollection, data);
@@ -179,7 +184,9 @@ export async function loadAlerts(uid: string) {
     console.log("createdAt: " + doc.data().createdAt);
     const createdAtDate = new Date(doc.data().createdAt.seconds * 1000);
     const createdAtString = createdAtDate.toLocaleDateString();
+
     console.log("createdAtString: " + createdAtString);
+
     return {
       id: doc.id,
       createdAtString,
@@ -229,6 +236,7 @@ export async function loadAlert(id: string) {
   const alertsCollection = collection(firestore, "alerts");
 
   const alertDoc = await getDoc(doc(alertsCollection, id));
+
   console.log("Loaded alert: ", alertDoc.data());
 
   return alertDoc.data();

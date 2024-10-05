@@ -14,17 +14,19 @@ import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { Spinner } from "@nextui-org/spinner";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthUserContext";
 import { logout } from "@/lib/auth";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathName = usePathname();
+
   console.log("pathName: ", pathName);
 
   const { authUser, authLoading: loading } = useAuth();
@@ -36,9 +38,9 @@ export const Navbar = () => {
 
   return (
     <NextUINavbar
+      isMenuOpen={isMenuOpen}
       maxWidth="xl"
       position="sticky"
-      isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent className="basis-1/5 md:basis-full" justify="start">
@@ -56,7 +58,7 @@ export const Navbar = () => {
                   linkStyles({
                     color: pathName == item.href ? "primary" : "foreground",
                   }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
                 href={item.href}
               >
@@ -108,8 +110,8 @@ export const Navbar = () => {
           <Button
             as={Link}
             color="primary"
-            onPress={logoutPressed}
             variant="flat"
+            onPress={logoutPressed}
           >
             Logout
           </Button>
@@ -148,8 +150,8 @@ export const Navbar = () => {
             <Button
               as={Link}
               color="primary"
-              onPress={logoutPressed}
               variant="flat"
+              onPress={logoutPressed}
             >
               Logout
             </Button>

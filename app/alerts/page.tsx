@@ -1,5 +1,4 @@
 "use client";
-import { deleteAlert, loadAlerts } from "@/lib/storage";
 import { Button } from "@nextui-org/button";
 import {
   Table,
@@ -14,8 +13,10 @@ import { useEffect, useState } from "react";
 import { Spinner } from "@nextui-org/spinner";
 import toast from "react-hot-toast";
 import { Link } from "@nextui-org/link";
-import { shortenString } from "@/lib/stringUtils";
 import { PiInfoThin, PiTrashSimpleThin } from "react-icons/pi";
+
+import { shortenString } from "@/lib/stringUtils";
+import { deleteAlert, loadAlerts } from "@/lib/storage";
 import { siteConfig } from "@/config/site";
 import { useAuth } from "@/context/AuthUserContext";
 import { PageTitle } from "@/components/pageTitle";
@@ -32,10 +33,12 @@ function AlertsPage() {
   const loadAlertData = async () => {
     console.log("User: ", authUser?.uid);
     const uid = authUser?.uid;
+
     if (!uid) {
       return;
     }
     const userAlerts = await loadAlerts(uid);
+
     console.log(`User's alerts: `, userAlerts);
     setAlerts(userAlerts);
     setLoadingAlerts(false);
@@ -93,16 +96,20 @@ function AlertsPage() {
     var newAlerts = alerts.map((alert) => {
       if (alert.id == alertId) {
         console.log("Setting deleting to true for alert: ", alert.id);
+
         return { ...alert, deleting: true };
       }
+
       return alert;
     });
+
     setAlerts(newAlerts);
 
     console.log("New alerts: ", newAlerts);
 
     const runDelete = async () => {
       const uid = authUser?.uid;
+
       if (!uid) {
         return;
       }
@@ -177,10 +184,10 @@ function AlertsPage() {
                                 <div className="flex items-center">
                                   {/* <Link href={"/alerts/" + item.id}> */}
                                   <Button
-                                    as={Link}
-                                    href={"/alerts/" + item.id}
                                     isIconOnly
+                                    as={Link}
                                     className="m-1 py-2"
+                                    href={"/alerts/" + item.id}
                                     size="sm"
                                   >
                                     <PiInfoThin size="sm" />
@@ -189,8 +196,8 @@ function AlertsPage() {
                                   <Button
                                     isIconOnly
                                     className="m-1 py-2"
-                                    onPress={() => deletePressed(item.id)}
                                     size="sm"
+                                    onPress={() => deletePressed(item.id)}
                                   >
                                     <PiTrashSimpleThin size="sm" />
                                   </Button>
@@ -212,11 +219,11 @@ function AlertsPage() {
               )}
             </Table>
             <Button
+              as={Link}
               className="mt-4"
               color="primary"
-              variant="flat"
-              as={Link}
               href={"/alerts/new"}
+              variant="flat"
             >
               create new alert
             </Button>
