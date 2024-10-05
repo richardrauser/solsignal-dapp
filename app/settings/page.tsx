@@ -7,7 +7,7 @@ import { Chip } from "@nextui-org/chip";
 import {
   createUser,
   loadUserAlertCount,
-  updateUserLogin as updateUserLoginDetails,
+  updateUserLoginDetails,
   userExists,
 } from "@/lib/storage";
 import { useAuth } from "@/context/AuthUserContext";
@@ -45,7 +45,7 @@ function SettingsPage() {
     if (!existingUser) {
       await createUser(user);
     } else {
-      updateUserLoginDetails(user.uid);
+      await updateUserLoginDetails(user.uid);
     }
   };
 

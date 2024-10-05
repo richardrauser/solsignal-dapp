@@ -49,7 +49,7 @@ export async function createUser(user: User) {
   });
 }
 
-export async function updateUserLogin(uid: string) {
+export async function updateUserLoginDetails(uid: string) {
   console.log("updateUserLogin: ", uid);
   const firestore = await getStorage();
 

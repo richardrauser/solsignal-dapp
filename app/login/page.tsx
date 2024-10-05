@@ -3,11 +3,7 @@ import { Button } from "@nextui-org/button";
 import { useState } from "react";
 import { Spinner } from "@nextui-org/spinner";
 import { loginWithEmail, loginWithGoogle } from "@/lib/auth";
-import {
-  createUser,
-  updateUserLogin as updateUserLoginDetails,
-  userExists,
-} from "@/lib/storage";
+import { createUser, updateUserLoginDetails, userExists } from "@/lib/storage";
 import { useAuth } from "@/context/AuthUserContext";
 import { PageTitle } from "@/components/pageTitle";
 import { useRouter } from "next/navigation";

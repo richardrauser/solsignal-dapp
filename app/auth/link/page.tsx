@@ -2,7 +2,11 @@
 
 import { LOCAL_STORE_EMAIL_FOR_AUTH_KEY } from "@/lib/auth";
 import { getFirebaseAuth } from "@/lib/firebase";
-import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
+import {
+  getAdditionalUserInfo,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
+} from "firebase/auth";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Spinner } from "@nextui-org/spinner";
@@ -11,6 +15,7 @@ import { PageTitle } from "@/components/pageTitle";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
+import { createUser, updateUserLoginDetails, userExists } from "@/lib/storage";
 
 export default function AuthLinkPage() {
   const router = useRouter();
@@ -56,6 +61,26 @@ export default function AuthLinkPage() {
             // getAdditionalUserInfo(result)?.profile
             // You can check if the user is new or existing:
             // getAdditionalUserInfo(result)?.isNewUser
+
+            const user = result.user;
+
+            if (!user) {
+              console.log("AuthLinkPage - User not found.");
+              setErrorMessage("User not found.");
+              setLoading(false);
+              return;
+            }
+
+            const updateUser = async () => {
+              const existingUser = await userExists(user.uid);
+              if (!existingUser) {
+                await createUser(user);
+              } else {
+                await updateUserLoginDetails(user.uid);
+              }
+            };
+
+            updateUser();
 
             router.push("/settings");
           })

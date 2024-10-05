@@ -175,15 +175,17 @@ function AlertsPage() {
                                 </center>
                               ) : (
                                 <div className="flex items-center">
-                                  <Link href={"/alerts/" + item.id}>
-                                    <Button
-                                      isIconOnly
-                                      className="m-1 py-2"
-                                      size="sm"
-                                    >
-                                      <PiInfoThin size="sm" />
-                                    </Button>
-                                  </Link>
+                                  {/* <Link href={"/alerts/" + item.id}> */}
+                                  <Button
+                                    as={Link}
+                                    href={"/alerts/" + item.id}
+                                    isIconOnly
+                                    className="m-1 py-2"
+                                    size="sm"
+                                  >
+                                    <PiInfoThin size="sm" />
+                                  </Button>
+                                  {/* </Link> */}
                                   <Button
                                     isIconOnly
                                     className="m-1 py-2"
@@ -209,11 +211,15 @@ function AlertsPage() {
                 </TableBody>
               )}
             </Table>
-            <Link href="/alerts/new">
-              <Button className="mt-4" color="primary" variant="flat">
-                create new alert
-              </Button>
-            </Link>
+            <Button
+              className="mt-4"
+              color="primary"
+              variant="flat"
+              as={Link}
+              href={"/alerts/new"}
+            >
+              create new alert
+            </Button>
           </>
         )}
       </Panel>
