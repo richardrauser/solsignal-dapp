@@ -1,69 +1,99 @@
-'use client'
-import { title } from '@/components/primitives'
-import { Button } from '@nextui-org/button'
-import { useState } from 'react'
-import { Spinner } from '@nextui-org/spinner'
-import { onAuthStateChanged, User } from 'firebase/auth'
-import { loginWithGoogle } from '@/libs/auth'
-import { getFirebaseAuth } from '@/libs/firebase'
-import { createUser, updateUserLogin as updateUserLoginDetails, userExists } from '@/libs/storage'
+"use client";
+import { Button } from "@nextui-org/button";
+import { useState } from "react";
+import { Spinner } from "@nextui-org/spinner";
+import { loginWithEmail, loginWithGoogle } from "@/lib/auth";
+import { createUser, updateUserLoginDetails, userExists } from "@/lib/storage";
+import { useAuth } from "@/context/AuthUserContext";
+import { PageTitle } from "@/components/pageTitle";
+import { useRouter } from "next/navigation";
+import { Panel } from "@/components/panel";
+import toast from "react-hot-toast";
+import { Input } from "@nextui-org/input";
+import { Divider } from "@nextui-org/divider";
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState(true)
-  const [loggingIn, setLoggingIn] = useState(false)
-  const [user, setUser] = useState<User | null | undefined>(null)
+  const [loggingIn, setLoggingIn] = useState(false);
+  const { authUser, authLoading } = useAuth();
+  const [email, setEmail] = useState("");
+  const router = useRouter();
 
-  const auth = getFirebaseAuth()
+  if (authUser) {
+    router.push("/settings");
+  }
 
-  onAuthStateChanged(auth, (user: User | null) => {
-    console.log('[onAuthStateChanged] User: ', user)
-    if (!loggingIn) {
-      setUser(user)
-      setLoading(false)
-    }
-  })
+  const loginWithEmailPressed = async () => {
+    console.log("loginWithEmailPressed: " + email);
+    setLoggingIn(true);
+
+    loginWithEmail(email, window.location.origin);
+
+    setLoggingIn(false);
+  };
 
   const loginWithGooglePressed = async () => {
-    console.log('loginWithGooglePressed')
-    setLoading(true)
-    setLoggingIn(true)
-    const user = await loginWithGoogle()
-    const existingUser = await userExists(user.uid)
-    if (!existingUser) {
-      await createUser(user)
-    } else {
-      updateUserLoginDetails(user.uid)
+    console.log("loginWithGooglePressed");
+    setLoggingIn(true);
+    try {
+      const user = await loginWithGoogle();
+      const existingUser = await userExists(user.uid);
+      if (!existingUser) {
+        await createUser(user);
+      } else {
+        updateUserLoginDetails(user.uid);
+      }
+    } catch (error: any) {
+      console.log("Login error: " + error.message);
+      toast.error("Could not login. " + error.message);
     }
-    setLoggingIn(false)
-  }
+    setLoggingIn(false);
+  };
 
   return (
     <div>
-      <h1 className={title()}>Login</h1>
-      {loading ? (
-        <div className="mt-8">
-          <Spinner />
-        </div>
-      ) : (
-        <>
-          {user ? (
-            <div className="mt-8">
-              <div>
-                <b>Your email:</b> {user.email}
+      <Panel>
+        <PageTitle>Login</PageTitle>
+        {authLoading ? (
+          <div className="mt-8">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {authUser ? (
+              <div className="mt-8">
+                <div>Your email: {authUser.email}</div>
+                <div>Your alerts: 0</div>
               </div>
-              <div>
-                <b>Your alerts:</b> 0
-              </div>
-            </div>
-          ) : (
-            <div className="mt-8">
-              <Button color="primary" variant="flat" onPress={loginWithGooglePressed}>
-                Login with Google
-              </Button>
-            </div>
-          )}
-        </>
-      )}
+            ) : (
+              <>
+                <Input
+                  label="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                ></Input>
+                <Button
+                  className="m-4"
+                  color="primary"
+                  variant="flat"
+                  onPress={loginWithEmailPressed}
+                >
+                  Login with Email
+                </Button>
+
+                <Divider></Divider>
+                <div className="m-4">
+                  <Button
+                    color="primary"
+                    variant="flat"
+                    onPress={loginWithGooglePressed}
+                  >
+                    Login with Google
+                  </Button>
+                </div>
+              </>
+            )}
+          </>
+        )}
+      </Panel>
     </div>
-  )
+  );
 }

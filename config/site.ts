@@ -1,65 +1,43 @@
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: 'SolSignal',
-  description: 'Configure Solana alerts to notify you when onchain events occur.',
+  name: "SolSignal",
+  description:
+    "Configure Solana alerts to notify you when onchain events occur.",
   navItems: [
-    // {
-    //   label: "Home",
-    //   href: "/",
-    // },
     {
-      label: 'Create alert',
-      href: '/create',
+      label: "New alert",
+      href: "/alerts/new",
     },
     {
-      label: 'Your alerts',
-      href: '/alerts',
+      label: "Your alerts",
+      href: "/alerts",
     },
     {
-      label: 'About',
-      href: '/about',
+      label: "About",
+      href: "/about",
+    },
+    {
+      label: "Settings",
+      href: "/settings",
     },
   ],
   navMenuItems: [
-    // {
-    //   label: "Profile",
-    //   href: "/profile",
-    // },
-    // {
-    //   label: "Dashboard",
-    //   href: "/dashboard",
-    // },
-    // {
-    //   label: "Projects",
-    //   href: "/projects",
-    // },
-    // {
-    //   label: "Team",
-    //   href: "/team",
-    // },
-    // {
-    //   label: "Calendar",
-    //   href: "/calendar",
-    // },
     {
-      label: 'Settings',
-      href: '/settings',
+      label: "New Alert",
+      href: "/alerts/new",
     },
     {
-      label: 'Help & Feedback',
-      href: '/help-feedback',
+      label: "Your Alerts",
+      href: "/alerts",
     },
     {
-      label: 'Logout',
-      href: '/logout',
+      label: "About",
+      href: "/about",
+    },
+    {
+      label: "Settings",
+      href: "/settings",
     },
   ],
-  links: {
-    github: 'https://github.com/nextui-org/nextui',
-    twitter: 'https://twitter.com/getnextui',
-    docs: 'https://nextui.org',
-    discord: 'https://discord.gg/9b6yyZKmH4',
-    sponsor: 'https://patreon.com/jrgarciadev',
-  },
-}
+};

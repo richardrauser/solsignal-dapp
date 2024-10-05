@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -7,70 +7,41 @@ import {
   NavbarBrand,
   NavbarItem,
   NavbarMenuItem,
-} from '@nextui-org/navbar'
-import { Button } from '@nextui-org/button'
-import { Kbd } from '@nextui-org/kbd'
-import { Link } from '@nextui-org/link'
-import { Input } from '@nextui-org/input'
-import { link as linkStyles } from '@nextui-org/theme'
-import NextLink from 'next/link'
-import clsx from 'clsx'
-import { Spinner } from '@nextui-org/spinner'
-import { siteConfig } from '@/config/site'
-import { ThemeSwitch } from '@/components/theme-switch'
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-  Logo,
-} from '@/components/icons'
-import { onAuthStateChanged, User } from 'firebase/auth'
-import { useState } from 'react'
-import { getFirebaseAuth } from '@/libs/firebase'
+} from "@nextui-org/navbar";
+import { Button } from "@nextui-org/button";
+import { Link } from "@nextui-org/link";
+import { link as linkStyles } from "@nextui-org/theme";
+import NextLink from "next/link";
+import clsx from "clsx";
+import { Spinner } from "@nextui-org/spinner";
+import { siteConfig } from "@/config/site";
+import { ThemeSwitch } from "@/components/theme-switch";
+import { Logo } from "@/components/icons";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthUserContext";
+import { logout } from "@/lib/auth";
 
 export const Navbar = () => {
-  const [loadingUser, setLoadingUser] = useState(true)
-  const [user, setUser] = useState<User | null | undefined>(null)
-  // const searchInput = (
-  //   <Input
-  //     aria-label="Search"
-  //     classNames={{
-  //       inputWrapper: "bg-default-100",
-  //       input: "text-sm",
-  //     }}
-  //     endContent={
-  //       <Kbd className="hidden lg:inline-block" keys={["command"]}>
-  //         K
-  //       </Kbd>
-  //     }
-  //     labelPlacement="outside"
-  //     placeholder="Search..."
-  //     startContent={
-  //       <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-  //     }
-  //     type="search"
-  //   />
-  // );
-  let firebase = require('firebase/app')
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathName = usePathname();
+  console.log("pathName: ", pathName);
 
-  const auth = getFirebaseAuth()
-
-  onAuthStateChanged(auth, (user: User | null) => {
-    console.log('[onAuthStateChanged] User: ', user)
-    setUser(user)
-    setLoadingUser(false)
-  })
+  const { authUser, authLoading: loading } = useAuth();
 
   const logoutPressed = async () => {
-    setLoadingUser(true)
-    await auth.signOut()
-  }
+    // setLoadingUser(true);
+    logout();
+  };
 
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+    <NextUINavbar
+      maxWidth="xl"
+      position="sticky"
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+    >
+      <NavbarContent className="basis-1/5 md:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
@@ -82,10 +53,11 @@ export const Navbar = () => {
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
-                  linkStyles({ color: 'foreground' }),
-                  'data-[active=true]:text-primary data-[active=true]:font-medium'
+                  linkStyles({
+                    color: pathName == item.href ? "primary" : "foreground",
+                  }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
-                color="foreground"
                 href={item.href}
               >
                 {item.label}
@@ -126,13 +98,29 @@ export const Navbar = () => {
         </NavbarItem>
       </NavbarContent> */}
 
-      <NavbarContent className=" pl-4" justify="end">
-        {/* <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link> */}
-        <ThemeSwitch />
+      <NavbarContent className="hidden md:flex" justify="end">
+        <NavbarContent className="pl-4" justify="end">
+          <ThemeSwitch />
+        </NavbarContent>
+        {loading ? (
+          <Spinner />
+        ) : authUser ? (
+          <Button
+            as={Link}
+            color="primary"
+            onPress={logoutPressed}
+            variant="flat"
+          >
+            Logout
+          </Button>
+        ) : (
+          <Button as={Link} color="primary" href="/login" variant="flat">
+            Login
+          </Button>
+        )}
       </NavbarContent>
 
+<<<<<<< HEAD
       {/* {loadingUser ? (
         <Spinner />
       ) : user ? (
@@ -145,28 +133,47 @@ export const Navbar = () => {
         </Button>
       )}
       <NavbarMenuToggle /> */}
+=======
+      <NavbarContent className="md:hidden" justify="end">
+        <NavbarContent className="pl-4" justify="end">
+          <ThemeSwitch />
+        </NavbarContent>
+        <NavbarMenuToggle />
+      </NavbarContent>
+>>>>>>> develop
 
       {/* <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
-                color={
-                  index === 2
-                    ? 'primary'
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? 'danger'
-                      : 'foreground'
-                }
-                href="#"
+                color={pathName == item.href ? "primary" : "foreground"}
+                href={item.href}
                 size="lg"
+                onPress={() => setIsMenuOpen(false)}
               >
                 {item.label}
               </Link>
             </NavbarMenuItem>
           ))}
+          {loading ? (
+            <Spinner />
+          ) : authUser ? (
+            <Button
+              as={Link}
+              color="primary"
+              onPress={logoutPressed}
+              variant="flat"
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button as={Link} color="primary" href="/login" variant="flat">
+              Login
+            </Button>
+          )}
         </div>
       </NavbarMenu> */}
     </NextUINavbar>
-  )
-}
+  );
+};

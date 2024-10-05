@@ -1,11 +1,9 @@
-import { Link } from '@nextui-org/link'
-import { Snippet } from '@nextui-org/snippet'
-import { Code } from '@nextui-org/code'
-import { button as buttonStyles } from '@nextui-org/theme'
+import { Link } from "@nextui-org/link";
+import { button as buttonStyles } from "@nextui-org/theme";
 
-import { siteConfig } from '@/config/site'
-import { title, subtitle } from '@/components/primitives'
-import { GithubIcon } from '@/components/icons'
+import { siteConfig } from "@/config/site";
+import { title, subtitle } from "@/components/primitives";
+import { MAX_ALERT_COUNT_USER } from "@/lib/consts";
 
 export default function Home() {
   return (
@@ -15,24 +13,22 @@ export default function Home() {
         <br />
         <br />
         <h1 className={title()}>Configure&nbsp;</h1>
-        <h1 className={title({ color: 'green' })}>Solana alerts&nbsp;</h1>
+        <h1 className={title({ color: "green" })}>Solana alerts&nbsp;</h1>
         <br />
         <h1 className={title()}>to notify you when onchain events occur.</h1>
-        <p className={'mt-8 mb-4 italic'}>
+        <p className={"mt-8 mb-4 italic"}>
           {`"`}Notify me when wallet 0x123...456 makes a SOL transaction{`"`}
-        </p>{' '}
-        <p className={'mt-4 mb-8 italic'}>
-          {`"`}Notify me when wallet 0x123...456{"'"}s balance falls below 10 SOL{`"`}
-        </p>{' '}
-        <Snippet hideCopyButton hideSymbol variant="bordered">
-          <span>
-            {/* Get started by editing <Code color="primary">app/page.tsx</Code> */}
-            Coming soon...
-          </span>
-        </Snippet>
+        </p>{" "}
+        <p className={"mt-4 mb-8 italic"}>
+          {`"`}Notify me when wallet 0x123...456{"'"}s balance falls below 10
+          SOL{`"`}
+        </p>{" "}
+        <h2 className={subtitle({ class: "mt-4" })}>
+          Your first {MAX_ALERT_COUNT_USER} alerts are free!
+        </h2>
       </div>
 
-      {/* <div className="flex gap-3">
+      <div className="flex gap-3">
         <Link
           className={buttonStyles({
             color: "primary",
@@ -42,9 +38,8 @@ export default function Home() {
           href={siteConfig.navItems[0].href}
         >
           Get started
-        </Link> */}
-
-      {/* <Link
+        </Link>
+        {/* <Link
           isExternal
           className={buttonStyles({ variant: "bordered", radius: "full" })}
           href={siteConfig.links.github}
@@ -52,7 +47,7 @@ export default function Home() {
           <GithubIcon size={20} />
           GitHub
         </Link> */}
-      {/* </div> */}
+      </div>
 
       {/* <div className="mt-8">
         <Snippet hideCopyButton hideSymbol variant="bordered">
@@ -63,5 +58,5 @@ export default function Home() {
         </Snippet>
       </div> */}
     </section>
-  )
+  );
 }
