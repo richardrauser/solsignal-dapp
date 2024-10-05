@@ -41,8 +41,13 @@ export default function NewAlertPage() {
 
     if (!currentUser) {
       const errorMessage = "No user logged in";
-      console.error(errorMessage);
-      throw Error(errorMessage);
+      toast.error(
+        "Thanks for showing interest! Please login before creating your alert."
+      );
+      // console.error(errorMessage);
+      // throw Error(errorMessage);
+      setLoading(false);
+      return;
     }
 
     const isAddressValid = validateSolanaAddress(transactionAlertWalletAddress);
@@ -146,7 +151,7 @@ export default function NewAlertPage() {
             <h2 className={subtitle()}></h2>
             <div className="mt-8">
               <div>
-                <b>💸 Transaction Alert -</b> Receive email when this wallet
+                <b>💸 Transaction Alert -</b> Receive an email when this wallet
                 makes a transaction:
               </div>
             </div>
