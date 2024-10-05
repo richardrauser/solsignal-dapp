@@ -3,6 +3,7 @@ import { Button } from "@nextui-org/button";
 import { useEffect, useState } from "react";
 import { Spinner } from "@nextui-org/spinner";
 import { loginWithGoogle } from "@/lib/auth";
+import { Chip } from "@nextui-org/chip";
 import {
   createUser,
   loadAlertCount,
@@ -61,14 +62,27 @@ function SettingsPage() {
           <>
             {authUser ? (
               <div className="mt-8">
-                <div className="p-4 flex">
-                  <PiPerson className="m-2" />
-                  <b>Your email:</b> {authUser.email}
+                <div className="p-4 flex align-middle">
+                  <PiPerson className="m-1 mt-1.5" />
+                  <div className="align-middle">
+                    <b>Email:</b>{" "}
+                    <Chip className="ml-2" color="primary">
+                      {authUser.email}
+                    </Chip>
+                  </div>
                 </div>
                 <div className="p-4 flex">
-                  <PiWarningCircle className="m-2" />
-                  <b>Your alerts: </b>{" "}
-                  {loadingAlertCount ? <Spinner className="sm" /> : alertCount}
+                  <PiWarningCircle className="m-1 mt-1.5" />
+                  <div className="align-middle">
+                    <b>Alerts: </b>{" "}
+                    {loadingAlertCount ? (
+                      <Spinner className="ml-2" size="sm" />
+                    ) : (
+                      <Chip className="ml-2" color="primary">
+                        {alertCount}
+                      </Chip>
+                    )}
+                  </div>
                 </div>
               </div>
             ) : (
