@@ -8,7 +8,7 @@ export default function AboutPage() {
   return (
     <div className="text-left">
       <Panel>
-        <PageTitle>About</PageTitle>
+        <PageTitle>About SolSignal v0.1</PageTitle>
         <p className="m-8">
           SolSignal.xyz is a web3 application that allows you to set up alerts
           for onchain Solana events. It was initially built in 2024 by{" "}
