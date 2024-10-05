@@ -132,9 +132,12 @@ export default function NewAlertPage() {
           <Spinner />
         ) : (
           <>
-            <h2 className={subtitle()}>💸 Transaction Alert</h2>
+            <h2 className={subtitle()}></h2>
             <div className="mt-8">
-              <div>Receive email when this wallet makes a transaction:</div>
+              <div>
+                <b>💸 Transaction Alert -</b> Receive email when this wallet
+                makes a transaction:
+              </div>
             </div>
 
             <Input
@@ -157,6 +160,8 @@ export default function NewAlertPage() {
             >
               create transaction alert
             </Button>
+
+            <p className="mt-4">More alert types coming soon...</p>
 
             {/* <h2 className={subtitle({ class: "mt-12" })}>📈 Balance Alert</h2>
       <div className="mt-4">
