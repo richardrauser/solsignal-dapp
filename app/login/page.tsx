@@ -55,8 +55,8 @@ export default function LoginPage() {
 
   return (
     <div>
-      <PageTitle>Login</PageTitle>
       <Panel>
+        <PageTitle>Login</PageTitle>
         {authLoading ? (
           <div className="mt-8">
             <Spinner />

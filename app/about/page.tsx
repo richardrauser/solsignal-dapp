@@ -7,8 +7,8 @@ import { Link } from "@nextui-org/link";
 export default function AboutPage() {
   return (
     <div>
-      <PageTitle>About</PageTitle>
       <Panel>
+        <PageTitle>About</PageTitle>
         <p className="m-8">
           SolSignal.xyz is a web3 application that allows you to set up alerts
           for onchain Solana events. It was initially built in 2024 by{" "}

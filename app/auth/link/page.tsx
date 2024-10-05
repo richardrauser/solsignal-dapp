@@ -75,8 +75,8 @@ export default function AuthLinkPage() {
   if (loading) {
     return (
       <>
-        <PageTitle>Authenticating...</PageTitle>
         <Panel>
+          <PageTitle>Authenticating...</PageTitle>
           <Spinner />
         </Panel>
       </>
@@ -84,8 +84,8 @@ export default function AuthLinkPage() {
   } else {
     return (
       <>
-        <PageTitle>Authentication failed.</PageTitle>
         <Panel>
+          <PageTitle>Authentication failed.</PageTitle>
           An error occurred. {errorMessage}
           <Link className="block" href="/login">
             <Button className="mt-4" color="primary" variant="flat">

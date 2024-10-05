@@ -8,7 +8,8 @@ export const withAuth = (WrappedComponent: any) => {
     const { authUser, authLoading } = useAuth();
     const router = useRouter();
     useEffect(() => {
-      if (!authUser) {
+      if (!authLoading && !authUser) {
+        console.log("No user, redirecting to login..");
         redirect("/login");
       }
     }, []);

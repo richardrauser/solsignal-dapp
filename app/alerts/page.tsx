@@ -124,9 +124,8 @@ function AlertsPage() {
 
   return (
     <div>
-      <PageTitle>Your alerts</PageTitle>
-
       <Panel>
+        <PageTitle>Your alerts</PageTitle>
         {loadingAlerts ? (
           <Spinner />
         ) : (

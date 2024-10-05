@@ -126,39 +126,39 @@ export default function NewAlertPage() {
 
   return (
     <div>
-      <PageTitle>New Alert</PageTitle>
+      <Panel>
+        <PageTitle>New Alert</PageTitle>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <h2 className={subtitle()}>💸 Transaction Alert</h2>
+            <div className="mt-8">
+              <div>Receive email when this wallet makes a transaction:</div>
+            </div>
 
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Panel>
-          <h2 className={subtitle()}>💸 Transaction Alert</h2>
-          <div className="mt-8">
-            <div>Receive email when this wallet makes a transaction:</div>
-          </div>
+            <Input
+              className="mt-4"
+              type="string"
+              label="Solana wallet address"
+              value={transactionAlertWalletAddress}
+              onChange={(e) => setTransactionAlertWalletAddress(e.target.value)}
+              placeholder="0x..."
+              startContent={
+                <PiWallet className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
+              }
+            />
 
-          <Input
-            className="mt-4"
-            type="string"
-            label="Solana wallet address"
-            value={transactionAlertWalletAddress}
-            onChange={(e) => setTransactionAlertWalletAddress(e.target.value)}
-            placeholder="0x..."
-            startContent={
-              <PiWallet className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
-            }
-          ></Input>
+            <Button
+              className="mt-4"
+              color="primary"
+              onPress={createTransactionAlertPressed}
+              variant="flat"
+            >
+              create transaction alert
+            </Button>
 
-          <Button
-            className="mt-4"
-            color="primary"
-            onPress={createTransactionAlertPressed}
-            variant="flat"
-          >
-            create transaction alert
-          </Button>
-
-          {/* <h2 className={subtitle({ class: "mt-12" })}>📈 Balance Alert</h2>
+            {/* <h2 className={subtitle({ class: "mt-12" })}>📈 Balance Alert</h2>
       <div className="mt-4">
         <div>Receive email when this wallet crosses a threshold:</div>
       </div>
@@ -182,8 +182,9 @@ export default function NewAlertPage() {
       >
         create balance alert
       </Button> */}
-        </Panel>
-      )}
+          </>
+        )}
+      </Panel>
     </div>
   );
 }

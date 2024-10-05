@@ -51,9 +51,8 @@ function SettingsPage() {
 
   return (
     <div>
-      <PageTitle>Settings</PageTitle>
-
       <Panel>
+        <PageTitle>Settings</PageTitle>
         {authLoading ? (
           <div className="mt-8">
             <Spinner />

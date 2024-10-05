@@ -21,8 +21,6 @@ import {
   PiWallet,
 } from "react-icons/pi";
 import { shortenString } from "@/lib/stringUtils";
-import { link as linkStyles } from "@nextui-org/theme";
-import NextLink from "next/link";
 import { deleteAlert, loadAlert } from "@/lib/storage";
 import { Spinner } from "@nextui-org/spinner";
 import toast from "react-hot-toast";
@@ -30,6 +28,7 @@ import { useRouter } from "next/navigation";
 import { fetchWalletBalance, fetchWalletTransactions } from "@/lib/blockchain";
 import { PageTitle } from "@/components/pageTitle";
 import { withAuth } from "@/components/withAuth";
+import { Panel } from "@/components/panel";
 
 const columns = [
   {
@@ -74,6 +73,7 @@ function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
       setWalletDetailsLoading(false);
 
       const sigList = await fetchWalletTransactions(address);
+      console.log("Transactions: ", sigList);
 
       setTransactions(sigList);
       setTransactionsLoading(false);
@@ -101,91 +101,93 @@ function AlertPage({ params: { alertId } }: { params: { alertId: string } }) {
 
   return (
     <>
-      <PageTitle> Your Alert</PageTitle>
-      <Card className="py-4 max-w-[400px]">
-        <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-          <p className="text-md uppercase font-bold">💸 Transaction Alert</p>
-          <p className="flex items-center text-small text-default-500 mt-2 mb-4">
-            <PiArrowElbowDownRightThin className="inline-block align-middle text-xl text-default-400 mr-2" />
-            Receive email when this wallet makes a transaction
-          </p>
-        </CardHeader>
-        <Divider />
-        <CardBody className="overflow-visible mt-2 mb-2">
-          <p className="text-md font-bold mb-2">Wallet Details</p>
-          {walletDetailsLoading ? (
-            <Spinner />
-          ) : (
-            <>
-              <div className="flex items-center">
-                <PiWallet className="inline-block align-middle text-xl text-default-400 mr-2" />
+      <Panel>
+        <PageTitle> Your Alert</PageTitle>
+        <Card className="py-4 max-w-[400px]">
+          <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+            <p className="text-md uppercase font-bold">💸 Transaction Alert</p>
+            <p className="flex items-center text-small text-default-500 mt-2 mb-4">
+              <PiArrowElbowDownRightThin className="inline-block align-middle text-xl text-default-400 mr-2" />
+              Receive email when this wallet makes a transaction
+            </p>
+          </CardHeader>
+          <Divider />
+          <CardBody className="overflow-visible mt-2 mb-2">
+            <p className="text-md font-bold mb-2">Wallet Details</p>
+            {walletDetailsLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                <div className="flex items-center">
+                  <PiWallet className="inline-block align-middle text-xl text-default-400 mr-2" />
 
-                <Link
-                  isExternal
-                  color="foreground"
-                  href={"https://solscan.io/account/" + walletAddress}
-                >
-                  {walletAddress && shortenString(walletAddress)}
-                </Link>
-              </div>
-              <div className="flex items-center mt-2">
-                <PiMoneyWavyThin className="inline-block align-middle text-xl text-default-400 mr-2" />
-                {balance}
-              </div>
-            </>
-          )}
-          <p className="text-md font-bold mt-4">Recent Transactions</p>
+                  <Link
+                    isExternal
+                    color="foreground"
+                    href={"https://solscan.io/account/" + walletAddress}
+                  >
+                    {walletAddress && shortenString(walletAddress)}
+                  </Link>
+                </div>
+                <div className="flex items-center mt-2">
+                  <PiMoneyWavyThin className="inline-block align-middle text-xl text-default-400 mr-2" />
+                  {balance}
+                </div>
+              </>
+            )}
+            <p className="text-md font-bold mt-4">Recent Transactions</p>
 
-          {transactionsLoading ? (
-            <Spinner className="mt-2" />
-          ) : (
-            <Table className="mt-2" aria-label="Recent transactions">
-              <TableHeader>
-                {columns.map((column) => (
-                  <TableColumn key={column.key}>{column.label}</TableColumn>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {transactions.map((row) => (
-                  <TableRow key={row.key}>
-                    {(columnKey) => {
-                      const value = getKeyValue(row, columnKey);
-                      if (columnKey === "signature") {
-                        return (
-                          <TableCell>
-                            <Link
-                              isExternal
-                              color="foreground"
-                              href={"https://solscan.io/tx/" + value}
-                            >
-                              {shortenString(value)}
-                            </Link>
-                          </TableCell>
-                        );
-                      } else {
-                        return (
-                          <TableCell>{getKeyValue(row, columnKey)}</TableCell>
-                        );
-                      }
-                    }}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
-        </CardBody>
-        <Divider />
-        <CardFooter className="grid grid-cols-2">
-          <Button onPress={editPressed} className="m-2">
-            <PiNotePencilThin />
-            Edit
-          </Button>
-          <Button onPress={deletePressed} className="m-2">
-            <PiTrashSimpleThin />
-            Delete
-          </Button>
-        </CardFooter>
-      </Card>
+            {transactionsLoading ? (
+              <Spinner className="mt-2" />
+            ) : (
+              <Table className="mt-2" aria-label="Recent transactions">
+                <TableHeader>
+                  {columns.map((column) => (
+                    <TableColumn key={column.key}>{column.label}</TableColumn>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {transactions.map((row) => (
+                    <TableRow key={row.key}>
+                      {(columnKey) => {
+                        const value = getKeyValue(row, columnKey);
+                        if (columnKey === "signature") {
+                          return (
+                            <TableCell>
+                              <Link
+                                isExternal
+                                color="foreground"
+                                href={"https://solscan.io/tx/" + value}
+                              >
+                                {shortenString(value)}
+                              </Link>
+                            </TableCell>
+                          );
+                        } else {
+                          return (
+                            <TableCell>{getKeyValue(row, columnKey)}</TableCell>
+                          );
+                        }
+                      }}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          </CardBody>
+          <Divider />
+          <CardFooter className="grid grid-cols-2">
+            <Button onPress={editPressed} className="m-2">
+              <PiNotePencilThin />
+              Edit
+            </Button>
+            <Button onPress={deletePressed} className="m-2">
+              <PiTrashSimpleThin />
+              Delete
+            </Button>
+          </CardFooter>
+        </Card>
+      </Panel>
     </>
   );
 }
