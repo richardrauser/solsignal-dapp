@@ -49,7 +49,7 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {/* {siteConfig.navItems.map((item) => (
+          {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
@@ -63,7 +63,7 @@ export const Navbar = () => {
                 {item.label}
               </NextLink>
             </NavbarItem>
-          ))} */}
+          ))}
         </ul>
       </NavbarContent>
 
@@ -120,29 +120,15 @@ export const Navbar = () => {
         )}
       </NavbarContent>
 
-<<<<<<< HEAD
-      {/* {loadingUser ? (
-        <Spinner />
-      ) : user ? (
-        <Button as={Link} color="primary" onPress={logoutPressed} variant="flat">
-          Logout
-        </Button>
-      ) : (
-        <Button as={Link} color="primary" href="/login" variant="flat">
-          Login
-        </Button>
-      )}
-      <NavbarMenuToggle /> */}
-=======
       <NavbarContent className="md:hidden" justify="end">
         <NavbarContent className="pl-4" justify="end">
           <ThemeSwitch />
         </NavbarContent>
         <NavbarMenuToggle />
       </NavbarContent>
->>>>>>> develop
 
-      {/* <NavbarMenu>
+      <NavbarMenu>
+        {/* {searchInput} */}
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
@@ -173,7 +159,7 @@ export const Navbar = () => {
             </Button>
           )}
         </div>
-      </NavbarMenu> */}
+      </NavbarMenu>
     </NextUINavbar>
   );
 };
