@@ -41,10 +41,50 @@ export default function AboutPage() {
         </p>
 
         <h2 className="font-semibold text-[1.2em] leading-9 mb-4">
+          Tech Stack
+        </h2>
+        <p className="m-4">
+          Frontend:{" "}
+          <Link isExternal className="" href="https://vercel.com">
+            Vercel
+          </Link>
+          <br />
+          UI:{" "}
+          <Link isExternal className="" href="https://nextui.org/">
+            NextUI
+          </Link>
+          <br />
+          Backend:{" "}
+          <Link isExternal className="" href="https://firebase.google.com/">
+            Firebase
+          </Link>
+          <br />
+          Blockchain:{" "}
+          <Link
+            isExternal
+            className=""
+            href="https://solana-labs.github.io/solana-web3.js/"
+          >
+            Solana web3
+          </Link>
+          <br />
+          RPC:{" "}
+          <Link isExternal className="" href="https://quicknode.com/">
+            QuickNode
+          </Link>
+          <br />
+          Webhooks:{" "}
+          <Link isExternal className="" href="https://www.helius.dev/">
+            Helius
+          </Link>
+          <br />
+        </p>
+
+        <h2 className="font-semibold text-[1.2em] leading-9 mb-4">
           Source code
         </h2>
         <p className="m-4">
-          The source code for this project is available here:{" "}
+          The source code for SolSignal.xyz is available here:{" "}
           <Link
             isExternal
             className=""
