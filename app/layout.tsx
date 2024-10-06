@@ -25,15 +25,15 @@ export const metadata: Metadata = {
     title: "SolSignal - onchain Solana alerts",
     description:
       "SolSignal - an alert system for Solana onchain events, by raaza",
+    images: [{ url: `https://solsignal.xyz/SolSignalWhiteOnBlack.png` }],
     creator: "@raaza",
-    // "og:image": `https://anglez.xyz/anglez-quadrants.png`,
   },
   openGraph: {
     title: "SolSignal - onchain Solana alerts",
     url: "https://solsignal.xyz/",
     description:
       "SolSignal - an alert system for Solana onchain events, by raaza ",
-    // images: [{ url: `https://anglez.xyz/anglez-quadrants.png` }],
+    images: [{ url: `https://solsignal.xyz/SolSignalWhiteOnBlack.png` }],
   },
   // other: {
   //   ...frame Metadata,
