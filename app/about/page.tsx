@@ -8,7 +8,7 @@ export default function AboutPage() {
     <div className="text-left">
       <Panel>
         <PageTitle>About SolSignal v0.1</PageTitle>
-        <p className="m-8">
+        <p className="m-4">
           SolSignal.xyz is a web3 application that allows you to set up alerts
           for onchain Solana events. It was initially built in 2024 by{" "}
           <Link
@@ -40,7 +40,32 @@ export default function AboutPage() {
           .
         </p>
 
-        <p className="m-8">
+        <h2 className="font-semibold text-[1.2em] leading-9 mb-4">
+          Source code
+        </h2>
+        <p className="m-4">
+          The source code for this project is available here:{" "}
+          <Link
+            isExternal
+            className=""
+            href="https://github.com/richardrauser/solsignal-cloud-functions"
+          >
+            GitHub - SolSignal Cloud Functions
+          </Link>
+          <br />
+          <Link
+            isExternal
+            className=""
+            href="https://github.com/richardrauser/solsignal-dapp"
+          >
+            GitHub - SolSignal dApp
+          </Link>
+        </p>
+
+        <h2 className="font-semibold text-[1.2em] leading-9 mb-4">
+          Upcoming features
+        </h2>
+        <p className="m-4">
           This is just the beginning for SolSignal.xyz, with many new features
           in the works. These include the folowing:
         </p>
@@ -55,6 +80,15 @@ export default function AboutPage() {
             <b>More customization options:</b> this, that, and the other thing
           </li>
         </ol>
+
+        <h2 className="font-semibold text-[1.2em] leading-9 mb-4">Feedback</h2>
+        <p className="m-4">
+          Send an email to{" "}
+          <Link isExternal className="" href="mailto:info@solsignal.xyz">
+            info@solsignal.xyz
+          </Link>{" "}
+          with any feedback or to discuss this project!
+        </p>
       </Panel>
     </div>
   );
