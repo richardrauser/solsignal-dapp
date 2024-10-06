@@ -13,7 +13,7 @@ export const LOCAL_STORE_EMAIL_FOR_AUTH_KEY = "solSignalEmailForAuth";
 
 export const loginWithEmail = async (email: string, continueUrl: string) => {
   console.log(
-    `loginWithEmail - logging in with email ${email} and continue URL ${continueUrl}`,
+    `loginWithEmail - logging in with email ${email} and continue URL ${continueUrl}`
   );
   try {
     const auth = getAuth();
@@ -25,8 +25,9 @@ export const loginWithEmail = async (email: string, continueUrl: string) => {
     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
     window.localStorage.setItem(LOCAL_STORE_EMAIL_FOR_AUTH_KEY, email);
     toast.success("Email sent. Check your inbox to complete login.");
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
+    toast.error("Error sending email: " + error.message);
   }
 };
 export async function loginWithGoogle(): Promise<User> {
