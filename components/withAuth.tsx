@@ -14,7 +14,7 @@ export const withAuth = (WrappedComponent: any) => {
         console.log("No user, redirecting to login..");
         redirect("/login");
       }
-    }, []);
+    }, [authUser]);
 
     // if (!session) {
     //   return null;

@@ -78,7 +78,7 @@ export async function updateUserLoginDetails(uid: string) {
 export async function checkWallertAlertExists(
   uid: string,
   walletAddress: string,
-  email: string,
+  email: string
 ) {
   const firestore = await getStorage();
   const alertType = AlertType.transaction;
@@ -89,7 +89,7 @@ export async function checkWallertAlertExists(
     where("uid", "==", uid),
     where("type", "==", alertType),
     where("walletAddress", "==", walletAddress),
-    where("email", "==", email),
+    where("email", "==", email)
   );
   const countResult = await getCountFromServer(alertsQuery);
 
@@ -99,7 +99,7 @@ export async function checkWallertAlertExists(
 export async function createWalletAlert(
   uid: string,
   walletAddress: string,
-  email: string,
+  email: string
 ) {
   console.log("createWalletAlert: ", walletAddress, email);
 
@@ -107,7 +107,7 @@ export async function createWalletAlert(
 
   if (currentAlertCount >= 3) {
     throw new Error(
-      `You have reached the maximum number of ${MAX_ALERT_COUNT_USER} free alerts.`,
+      `You have reached the maximum number of ${MAX_ALERT_COUNT_USER} free alerts.`
     );
   }
 
@@ -131,7 +131,7 @@ export async function createWalletAlert(
 export async function checkBalanceAlertExists(
   uid: string,
   walletAddress: string,
-  email: string,
+  email: string
 ) {
   const firestore = await getStorage();
   const alertType = AlertType.balance;
@@ -142,7 +142,7 @@ export async function checkBalanceAlertExists(
     where("uid", "==", uid),
     where("type", "==", alertType),
     where("walletAddress", "==", walletAddress),
-    where("email", "==", email),
+    where("email", "==", email)
   );
   const countResult = await getCountFromServer(alertsQuery);
 
@@ -152,7 +152,7 @@ export async function checkBalanceAlertExists(
 export async function createBalanceAlert(
   uid: string,
   walletAddress: string,
-  email: string,
+  email: string
 ) {
   console.log("createBalanceAlert: ", walletAddress, email);
   const firestore = await getStorage();
@@ -249,7 +249,7 @@ export async function deleteAlert(alertId: string) {
 
   await deleteDoc(doc(alertsCollection, alertId));
 
-  // TODO: remove webhook from helius
+  // Firebase cloud function DB trigger will delete alert
 
   console.log("Deleted alert: ", alertId);
 }
