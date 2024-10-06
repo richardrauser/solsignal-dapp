@@ -22,17 +22,17 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     site: "@volstrate",
-    title: "anglez - abstract, angular, on-chain art",
+    title: "SolSignal - onchain Solana alerts",
     description:
-      "anglez - abract, angular, on-chain, generative NFT art by volstrate.",
-    creator: "@volstrate",
+      "SolSignal - an alert system for Solana onchain events, by raaza",
+    creator: "@raaza",
     // "og:image": `https://anglez.xyz/anglez-quadrants.png`,
   },
   openGraph: {
-    title: "anglez - abstract, angular, on-chain art",
-    url: "https://anglez.xyz/",
+    title: "SolSignal - onchain Solana alerts",
+    url: "https://solsignal.xyz/",
     description:
-      "anglez - abract, angular, on-chain, generative NFT art by volstrate.  ",
+      "SolSignal - an alert system for Solana onchain events, by raaza ",
     // images: [{ url: `https://anglez.xyz/anglez-quadrants.png` }],
   },
   // other: {
@@ -69,7 +69,7 @@ export default function RootLayout({
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
