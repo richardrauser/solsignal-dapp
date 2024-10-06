@@ -8,13 +8,13 @@ import {
 
 // prod quicknode
 function getSolanaConnection() {
-  const solanaEndpoint = process.env.SOLANA_HTTP_ENDPOINT;
+  const solanaEndpoint = process.env.NEXT_PUBLIC_SOLANA_HTTP_ENDPOINT;
   if (!solanaEndpoint) {
     const errorMessage = "Solana endpoint not set.";
     throw new Error(errorMessage);
   }
   const solanaConnection = new Connection(solanaEndpoint, {
-    wsEndpoint: process.env.SOLANA_WSS_ENDPOINT,
+    wsEndpoint: process.env.NEXT_PUBLIC_SOLANA_WSS_ENDPOINT,
   });
 
   return solanaConnection;
