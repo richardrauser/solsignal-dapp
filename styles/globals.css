@@ -12,12 +12,12 @@ h1 {
 }
 
 div.panel {
-  background-color: #222;
+  /* background-color: #222;
   border: 1px solid #17c964;
   border-radius: 4px;
   padding: 10px;
-  margin: 10px;
-  min-width: 480px;
+  margin: 10px; */
+  min-width: 300px;
 }
 
 h1.pageTitle {
