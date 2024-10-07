@@ -11,7 +11,7 @@ export const withAuth = (WrappedComponent: any) => {
     useEffect(() => {
       if (!authLoading && !authUser) {
         console.log("No user, redirecting to home screen..");
-        redirect("/");
+        redirect("/login");
       }
     }, [authUser]);
 
