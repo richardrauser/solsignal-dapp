@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBCT-kQlmeqmDQAa3bwtsbeJ_anrzYafnU",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "solsignal-app.firebaseapp.com",
   projectId: "solsignal-app",
   storageBucket: "solsignal-app.appspot.com",
