@@ -14,6 +14,10 @@ export const siteConfig = {
       href: "/alerts",
     },
     {
+      label: "Pricing",
+      href: "/pricing",
+    },
+    {
       label: "About",
       href: "/about",
     },
@@ -30,6 +34,10 @@ export const siteConfig = {
     {
       label: "Your Alerts",
       href: "/alerts",
+    },
+    {
+      label: "Pricing",
+      href: "/pricing",
     },
     {
       label: "About",
