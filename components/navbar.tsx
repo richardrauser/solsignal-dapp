@@ -32,8 +32,8 @@ export const Navbar = () => {
   const { authUser, authLoading: loading } = useAuth();
 
   const logoutPressed = async () => {
-    // setLoadingUser(true);
-    logout();
+    await logout();
+    setIsMenuOpen(false);
   };
 
   return (
@@ -58,7 +58,7 @@ export const Navbar = () => {
                   linkStyles({
                     color: pathName == item.href ? "primary" : "foreground",
                   }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 href={item.href}
               >
@@ -156,7 +156,13 @@ export const Navbar = () => {
               Logout
             </Button>
           ) : (
-            <Button as={Link} color="primary" href="/login" variant="flat">
+            <Button
+              as={Link}
+              color="primary"
+              href="/login"
+              variant="flat"
+              onPress={() => setIsMenuOpen(false)}
+            >
               Login
             </Button>
           )}

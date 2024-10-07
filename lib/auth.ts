@@ -1,3 +1,4 @@
+"use client";
 import {
   getAuth,
   signInWithPopup,
@@ -6,7 +7,6 @@ import {
 } from "firebase/auth";
 import { User } from "firebase/auth";
 import toast from "react-hot-toast";
-
 import { getFirebaseAuth } from "./firebase";
 
 export const LOCAL_STORE_EMAIL_FOR_AUTH_KEY = "solSignalEmailForAuth";
@@ -70,8 +70,7 @@ export async function loginWithGoogle(): Promise<User> {
 
 export async function logout() {
   const auth = getFirebaseAuth();
-
-  return auth.signOut();
+  return await auth.signOut();
 }
 
 async function storeUser(user: User) {}
