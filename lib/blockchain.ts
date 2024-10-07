@@ -6,15 +6,16 @@ import {
   PublicKey,
 } from "@solana/web3.js";
 
-const SOLANA_HTTP_ENDPOINT =
-  "https://white-blue-thunder.solana-mainnet.quiknode.pro/013268b6574ed4ec03683c918cadca2ba92226e1";
+// const SOLANA_HTTP_ENDPOINT =
+//   "https://white-blue-thunder.solana-mainnet.quiknode.pro/013268b6574ed4ec03683c918cadca2ba92226e1";
 const SOLANA_WSS_ENDPOINT =
   "wss://white-blue-thunder.solana-mainnet.quiknode.pro/013268b6574ed4ec03683c918cadca2ba92226e1";
 
 // prod quicknode
 function getSolanaConnection() {
-  // const solanaEndpoint = process.env.NEXT_PUBLIC_SOLANA_HTTP_ENDPOINT;
-  const solanaEndpoint = SOLANA_HTTP_ENDPOINT;
+  const solanaEndpoint = process.env.NEXT_PUBLIC_SOLANA_HTTP_ENDPOINT;
+  console.log("solanaEndpoint: ", solanaEndpoint);
+  // const solanaEndpoint = SOLANA_HTTP_ENDPOINT;
   if (!solanaEndpoint) {
     const errorMessage = "Solana endpoint not set.";
     throw new Error(errorMessage);
