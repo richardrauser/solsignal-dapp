@@ -190,7 +190,7 @@ function AlertsPage() {
                                     href={"/alerts/" + item.id}
                                     size="sm"
                                   >
-                                    <PiInfoThin color="primary" size="sm" />
+                                    <PiInfoThin color="white" size="sm" />
                                   </Button>
                                   {/* </Link> */}
                                   <Button
@@ -200,7 +200,7 @@ function AlertsPage() {
                                     onPress={() => deletePressed(item.id)}
                                   >
                                     <PiTrashSimpleThin
-                                      color="primary"
+                                      color="white"
                                       size="sm"
                                     />
                                   </Button>
