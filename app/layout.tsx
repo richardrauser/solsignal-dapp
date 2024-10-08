@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: "SolSignal - onchain Solana alerts",
     url: "https://solsignal.xyz/",
     description:
-      "SolSignal - an alert system for Solana onchain events, by raaza ",
+      "SolSignal - an alert system for Solana onchain events, by raaza",
     images: [{ url: `https://solsignal.xyz/SolSignalWhiteOnBlack.png` }],
   },
   // other: {
