@@ -34,7 +34,7 @@ export default function AboutPage() {
                 <Image
                   alt="Album cover"
                   className="object-cover"
-                  height={100}
+                  // height={100}
                   shadow="md"
                   src="/SolSignalPricingFree.png"
                   width="100%"
@@ -81,7 +81,7 @@ export default function AboutPage() {
                 <Image
                   alt="Album cover"
                   className="object-cover"
-                  height={100}
+                  // height={100}
                   shadow="md"
                   src="/SolSignalPricingBasic.png"
                   width="100%"
@@ -127,7 +127,7 @@ export default function AboutPage() {
                 <Image
                   alt="Album cover"
                   className="object-cover"
-                  height={100}
+                  // height={100}
                   shadow="md"
                   src="/SolSignalPricingPro.png"
                   width="100%"
