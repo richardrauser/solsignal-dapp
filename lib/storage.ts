@@ -8,6 +8,7 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  orderBy,
   query,
   setDoc,
   where,
@@ -73,6 +74,35 @@ export async function updateUserLoginDetails(uid: string) {
     loginCount,
     lastLoginAt: new Date(),
   });
+}
+
+export type PricePlan = {
+  name: string;
+  price: number;
+  alerts: number;
+  image: string;
+};
+
+export async function loadPricePlan(planId: string) {
+  console.log("loadPricePlan");
+
+  const firestore = await getStorage();
+  const pricePlansCollection = collection(firestore, "price-plans");
+
+  const pricePlanDoc = await getDoc(doc(pricePlansCollection, planId));
+
+  return pricePlanDoc.data() as PricePlan;
+}
+
+export async function loadPricePlans() {
+  console.log("loadPricePlans");
+  const firestore = await getStorage();
+  const pricePlansCollection = collection(firestore, "price-plans");
+
+  const pricePlansQuery = query(pricePlansCollection, orderBy("price"));
+  const querySnapshot = await getDocs(pricePlansQuery);
+
+  return querySnapshot.docs.map((doc) => doc.data() as PricePlan);
 }
 
 export async function checkWallertAlertExists(
