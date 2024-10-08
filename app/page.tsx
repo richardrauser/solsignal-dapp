@@ -4,12 +4,16 @@ import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { MAX_ALERT_COUNT_USER } from "@/lib/consts";
+import { Logo } from "@/components/icons";
 
 export default function Home() {
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-xl text-center justify-center">
-        <h1 className={title()}>📈 😎</h1>
+        <h1 className={title()}>
+          <Logo className="inline" size={60} />
+          📈 😎
+        </h1>
         <br />
         <br />
         <h1 className={title()}>Configure&nbsp;</h1>
