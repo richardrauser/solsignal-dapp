@@ -11,8 +11,8 @@ export default function AboutPage() {
         <p className="m-4">
           SolSignal.xyz is a web3 application that allows you to set up alerts
           for onchain Solana events. SolSignal is simply the easiest way to stay
-          abreast of Solana events. It was initially built in September +
-          October 2024 by{" "}
+          abreast of Solana events. It was initially built in September late
+          2024 by{" "}
           <Link
             isExternal
             className=""
