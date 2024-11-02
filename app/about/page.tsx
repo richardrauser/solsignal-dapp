@@ -7,7 +7,7 @@ export default function AboutPage() {
   return (
     <div className="text-left">
       <Panel>
-        <PageTitle>About SolSignal v0.1.1</PageTitle>
+        <PageTitle>About SolSignal v0.2</PageTitle>
         <p className="m-4">
           SolSignal.xyz is a web3 application that allows you to set up alerts
           for onchain Solana events. SolSignal is simply the easiest way to stay
@@ -28,9 +28,9 @@ export default function AboutPage() {
             href="https://www.x.com/richardrauser"
             title="Richard Rauser on X.com"
           >
-            Richard Rauser
-          </Link>{" "}
-          as part of the
+            Richard Rauser.
+          </Link>
+          {/* as part of the
           <Link
             isExternal
             className=""
@@ -39,7 +39,7 @@ export default function AboutPage() {
           >
             Solana Radar Global Hackathon
           </Link>
-          .
+          . */}
         </p>
 
         <h2 className="font-semibold text-[1.2em] leading-9 mb-4">
@@ -59,6 +59,14 @@ export default function AboutPage() {
           Backend:{" "}
           <Link isExternal className="" href="https://firebase.google.com/">
             Firebase
+          </Link>
+          {", "}
+          <Link
+            isExternal
+            className=""
+            href="https://www.quicknode.com/functions"
+          >
+            QuickNode Functions
           </Link>
           <br />
           Blockchain:{" "}
