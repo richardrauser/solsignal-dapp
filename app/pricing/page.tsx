@@ -50,7 +50,7 @@ export default function AboutPage() {
                   <Image
                     alt="Album cover"
                     className="object-cover"
-                    // height={100}
+                    height={100}
                     shadow="md"
                     src={"/" + plan.image}
                     width="100%"
